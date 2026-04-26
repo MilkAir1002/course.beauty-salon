@@ -39,7 +39,7 @@
                                 <Insets right="97.0" />
                             </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="344.0" style="-fx-background-radius: 34.5; -fx-background-color: #E8C0C5; -fx-text-fill: #F6F7EC;" text="Администратор">
+                        <Button onAction="#admin" prefHeight="69.0" prefWidth="344.0" style="-fx-background-radius: 34.5; -fx-background-color: #E8C0C5; -fx-text-fill: #F6F7EC;" text="Администратор">
                             <font>
                                 <Font name="Segoe UI Semibold" size="29.0" />
                             </font>

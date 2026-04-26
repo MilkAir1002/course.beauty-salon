@@ -17,7 +17,8 @@ public class RoleSelectorController {
     }
 
     @FXML
-    private void admin(ActionEvent event) {
+    private void admin(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/login_admin.fxml", "Вход для админа");
     }
 
     private void changeWindow(ActionEvent event, String fxmlPath, String title) throws IOException {
