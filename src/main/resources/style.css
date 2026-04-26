@@ -1,0 +1,8 @@
+.link-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: red;
+    -fx-underline: true;
+    -fx-cursor: hand;
+    -fx-padding: 0;
+}

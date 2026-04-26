@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" style="-fx-background-color: #E6F8F0;"
+      xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="salon.controller.RegisterController">
+
+    <Label style="-fx-font-size: 20px;" text="Регистрация" />
+
+    <TextField fx:id="firstName" maxWidth="200" promptText="Имя" />
+    <TextField fx:id="lastName" maxWidth="200" promptText="Фамилия" />
+    <TextField fx:id="middleName" maxWidth="200" promptText="Отчество" />
+    <TextField fx:id="phone" maxWidth="200" promptText="Телефон" />
+    <TextField fx:id="email" maxWidth="200" promptText="Почта" />
+    <TextField fx:id="login" maxWidth="200" promptText="Логин" />
+    <PasswordField fx:id="password" maxWidth="200" promptText="Пароль" />
+
+    <HBox alignment="CENTER" spacing="10">
+        <fx:define>
+            <ToggleGroup fx:id="genderGroup"/>
+        </fx:define>
+        <RadioButton text="Мужской" toggleGroup="$genderGroup" userData="Мужской"/>
+        <RadioButton text="Женский" toggleGroup="$genderGroup" userData="Женский"/>
+    </HBox>
+
+    <Button text="Зарегистрироваться" onAction="#registerAction" />
+    <Button text="Назад" onAction="#back" />
+</VBox>

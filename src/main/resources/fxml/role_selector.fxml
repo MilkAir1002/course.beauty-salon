@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox alignment="CENTER" spacing="20" style="-fx-background-color: #F8E6E6;" xmlns:fx="http://javafx.com/fxml" fx:controller="salon.controller.RoleSelectorController">
+    <Label text="Добро пожаловать в салон красоты сочная вишня" style="-fx-font-size: 18px;"/>
+    <Label text="Выберите как хотите войти:"/>
+    <HBox alignment="CENTER" spacing="10">
+        <Button text="Клиент" onAction="#client"/>
+        <Button text="Администратор" onAction="#admin"/>
+    </HBox>
+</VBox>
