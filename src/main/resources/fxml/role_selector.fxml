@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #F4E2E4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.RoleSelectorController">
+<AnchorPane prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #F4E2E4;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.RoleSelectorController" stylesheets="@/style.css">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #FFFFFF;">
             <children>
