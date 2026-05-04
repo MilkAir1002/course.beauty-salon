@@ -2,30 +2,40 @@ package salon.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 
 import java.io.IOException;
 
-public class RoleSelectorController {
+public class RoleSelectorController extends BaseController {
     @FXML
-    private void client(ActionEvent event) throws IOException {
-        changeWindow(event, "/fxml/login_client.fxml", "Вход для клиента");
+    private TextField loginField;
+
+    @FXML
+    private PasswordField passwordField;
+
+    @FXML
+    private ToggleGroup roleGroup;
+
+    @FXML
+    private void handleLogin(ActionEvent event) throws IOException {
+        Toggle selectedRole = roleGroup.getSelectedToggle();
+        String role = selectedRole != null ? selectedRole.getUserData().toString() : "CLIENT";
+
+        if (loginField.getText().trim().isEmpty() || passwordField.getText().isEmpty()) {
+            showError("Введите логин и пароль.");
+            return;
+        }
+
+        System.out.println("Вход: " + loginField.getText() + ", роль: " + role);
+        passwordField.clear();
+        changeWindow(event, "/fxml/client_menu.fxml", "Личный кабинет");
     }
 
     @FXML
-    private void admin(ActionEvent event) throws IOException {
-        changeWindow(event, "/fxml/login_admin.fxml", "Вход для админа");
-    }
-
-    private void changeWindow(ActionEvent event, String fxmlPath, String title) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle(title);
-        stage.setScene(new Scene(root, 830, 631));
-        stage.show();
+    private void switchToRegister(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/register.fxml", "Регистрация");
     }
 }

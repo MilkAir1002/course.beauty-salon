@@ -1,29 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="10" style="-fx-background-color: #E6F8F0;"
-      xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="salon.controller.RegisterController">
+<HBox prefHeight="631.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.RegisterController">
 
-    <Label style="-fx-font-size: 20px;" text="Регистрация" />
+    <children>
+        <!-- Левая информационная панель -->
+        <VBox alignment="CENTER" prefWidth="360.0" spacing="20.0" style="-fx-background-color: #E8C0C5;">
+            <children>
+                <Label alignment="CENTER" text="Создайте аккаунт" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="Serif Bold" size="28.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" text="Заполните данные для записи в салон" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Button mnemonicParsing="false" onAction="#back" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="НАЗАД" textFill="WHITE">
+                    <padding>
+                        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+                    </padding>
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+            <padding>
+                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+            </padding>
+        </VBox>
 
-    <TextField fx:id="firstName" maxWidth="200" promptText="Имя" />
-    <TextField fx:id="lastName" maxWidth="200" promptText="Фамилия" />
-    <TextField fx:id="middleName" maxWidth="200" promptText="Отчество" />
-    <TextField fx:id="phone" maxWidth="200" promptText="Телефон" />
-    <TextField fx:id="email" maxWidth="200" promptText="Почта" />
-    <TextField fx:id="login" maxWidth="200" promptText="Логин" />
-    <PasswordField fx:id="password" maxWidth="200" promptText="Пароль" />
+        <!-- Правая панель регистрации -->
+        <VBox alignment="CENTER" prefWidth="470.0" spacing="18.0" style="-fx-background-color: #FFFFFF;" HBox.hgrow="ALWAYS">
+            <children>
+                <VBox alignment="CENTER" spacing="5.0">
+                    <children>
+                        <Circle fill="#F4E2E4" radius="35.0" stroke="#E8C0C5" strokeType="INSIDE" strokeWidth="2.0" />
+                        <Label text="ЭСТЕТИКА" textFill="#758952">
+                            <font>
+                                <Font name="Serif Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label text="РЕГИСТРАЦИЯ" textFill="#E8C0C5">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
 
-    <HBox alignment="CENTER" spacing="10">
-        <fx:define>
-            <ToggleGroup fx:id="genderGroup"/>
-        </fx:define>
-        <RadioButton text="Мужской" toggleGroup="$genderGroup" userData="Мужской"/>
-        <RadioButton text="Женский" toggleGroup="$genderGroup" userData="Женский"/>
-    </HBox>
+                <VBox maxWidth="360.0" spacing="12.0">
+                    <children>
+                          <TextField fx:id="lastName" promptText="Фамилия" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+                          <TextField fx:id="firstName" promptText="Имя" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+                          <TextField fx:id="middleName" promptText="Отчество" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+                          <TextField fx:id="phone" promptText="Телефон" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+                          <TextField fx:id="email" promptText="Почта" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
 
-    <Button text="Зарегистрироваться" onAction="#registerAction" />
-    <Button text="Назад" onAction="#back" />
-</VBox>
+                        <HBox alignment="CENTER" spacing="24.0">
+                            <children>
+                                <RadioButton fx:id="maleRadio" selected="true" text="МУЖСКОЙ" textFill="#758952" userData="Мужской">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="genderGroup" />
+                           </toggleGroup></RadioButton>
+                                <RadioButton fx:id="femaleRadio" text="ЖЕНСКИЙ" textFill="#758952" toggleGroup="$genderGroup" userData="Женский" />
+                            </children>
+                        </HBox>
+                  <VBox prefHeight="70.0" prefWidth="360.0" spacing="12.0">
+                     <children>
+                                <TextField fx:id="login" prefWidth="360.0" promptText="Логин" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+      
+                              <PasswordField fx:id="password" promptText="Пароль" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+                     </children>
+                  </VBox>
+
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#registerAction" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="ЗАРЕГИСТРИРОВАТЬСЯ" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets bottom="12.0" top="12.0" />
+                            </padding>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</HBox>
