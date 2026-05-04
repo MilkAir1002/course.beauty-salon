@@ -31,7 +31,11 @@ public class RoleSelectorController extends BaseController {
 
         System.out.println("Вход: " + loginField.getText() + ", роль: " + role);
         passwordField.clear();
-        changeWindow(event, "/fxml/client_menu.fxml", "Личный кабинет");
+        if ("ADMIN".equals(role)) {
+            changeWindow(event, "/fxml/admin_menu.fxml", "Панель администратора");
+        } else {
+            changeWindow(event, "/fxml/client_menu.fxml", "Личный кабинет");
+        }
     }
 
     @FXML
