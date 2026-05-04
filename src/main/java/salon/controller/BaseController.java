@@ -34,4 +34,12 @@ public class BaseController {
         alert.setContentText(text);
         alert.showAndWait();
     }
+
+    protected void openNewWindow(String fxmlPath, String title) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+        Stage stage = new Stage();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 }

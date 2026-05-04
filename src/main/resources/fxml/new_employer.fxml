@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="331.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.NewEmployerController">
+   <children>
+      <Label alignment="CENTER" prefHeight="47.0" prefWidth="335.0" text="Добавление сотрудника" textFill="#758952">
+         <font>
+            <Font name="Serif Bold" size="24.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+      </Label>
+      <VBox maxWidth="420.0" spacing="14.0">
+         <children>
+            <TextField fx:id="fullName" promptText="ФИО" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+            <DatePicker fx:id="birthDate" maxWidth="1.7976931348623157E308" promptText="Дата" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+            <TextField fx:id="phone" promptText="Телефон" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+            <ComboBox fx:id="post" maxWidth="1.7976931348623157E308" promptText="Должность" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+         </children>
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </VBox>
+      <Button fx:id="saveAppointmentButton" onAction="#saveAppointmentButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="114.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="Добавить" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <padding>
+            <Insets bottom="12.0" top="12.0" />
+         </padding>
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
+      </Button>
+   </children>
+</VBox>
