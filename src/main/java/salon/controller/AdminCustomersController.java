@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
-public class AdminCustomentsController  extends BaseController {
+public class AdminCustomersController extends BaseController {
     // левая панель
     @FXML
     private void logout(ActionEvent event) throws IOException {

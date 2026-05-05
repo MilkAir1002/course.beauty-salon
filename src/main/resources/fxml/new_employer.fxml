@@ -11,12 +11,12 @@
 
 <VBox alignment="TOP_CENTER" prefHeight="331.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.NewEmployerController">
    <children>
-      <Label alignment="CENTER" prefHeight="47.0" prefWidth="335.0" text="Добавление сотрудника" textFill="#758952">
+      <Label alignment="CENTER" prefHeight="64.0" prefWidth="345.0" text="Добавление/редактирование сотрудника" textAlignment="CENTER" textFill="#758952" wrapText="true">
          <font>
             <Font name="Serif Bold" size="24.0" />
          </font>
          <VBox.margin>
-            <Insets top="30.0" />
+            <Insets top="20.0" />
          </VBox.margin>
       </Label>
       <VBox maxWidth="420.0" spacing="14.0">
@@ -30,7 +30,7 @@
             <Insets top="20.0" />
          </VBox.margin>
       </VBox>
-      <Button fx:id="saveAppointmentButton" onAction="#saveAppointmentButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="114.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="Добавить" textFill="WHITE">
+      <Button fx:id="saveAppointmentButton" mnemonicParsing="false" onAction="#saveAppointmentButton" prefHeight="44.0" prefWidth="114.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="Добавить" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
