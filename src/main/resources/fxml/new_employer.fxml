@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="331.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.NewEmployerController">
+<VBox alignment="TOP_CENTER" prefHeight="331.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" prefHeight="64.0" prefWidth="345.0" text="Добавление/редактирование сотрудника" textAlignment="CENTER" textFill="#758952" wrapText="true">
          <font>
@@ -30,7 +30,7 @@
             <Insets top="20.0" />
          </VBox.margin>
       </VBox>
-      <Button fx:id="saveAppointmentButton" mnemonicParsing="false" onAction="#saveAppointmentButton" prefHeight="44.0" prefWidth="114.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="Добавить" textFill="WHITE">
+      <Button fx:id="saveAppointmentButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="114.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="Добавить" textFill="WHITE">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

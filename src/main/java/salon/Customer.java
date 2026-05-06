@@ -3,29 +3,29 @@ package salon;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Employer {
+public class Customer {
     private static int nextId = 1;
     private int id;
     private String fullName;
     private LocalDate birthDate;
     private String phone;
-    private String position;
+    private String additionalInfo;
 
     // Конструктор для создания нового сотрудника
-    public Employer(String fullName, LocalDate birthDate, String phone, String position) {
+    public Customer(String fullName, LocalDate birthDate, String phone, String additionalInfo) {
         this.id = nextId++;
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.phone = phone;
-        this.position = position;
+        this.additionalInfo = additionalInfo;
     }
     // Конструктор для редактирования сотрудника (сохраняется старый id)
-    public Employer(int id, String fullName, LocalDate birthDate, String phone, String position) {
+    public Customer(int id, String fullName, LocalDate birthDate, String phone, String additionalInfo) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.phone = phone;
-        this.position = position;
+        this.additionalInfo = additionalInfo;
     }
 
     // Геттеры
@@ -45,8 +45,8 @@ public class Employer {
         return phone;
     }
 
-    public String getPosition() {
-        return position;
+    public String getAdditionalInfo() {
+        return additionalInfo;
     }
 
     // Форматированная дата для отображения в таблице
@@ -59,8 +59,8 @@ public class Employer {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Employer employer = (Employer) obj;
-        return id == employer.id;
+        Customer customer = (Customer) obj;
+        return id == customer.id;
     }
 
     @Override
