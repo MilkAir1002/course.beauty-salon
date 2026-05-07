@@ -2,6 +2,7 @@ package salon.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import salon.db.database;
 
 import java.io.IOException;
 
@@ -18,6 +19,7 @@ public class ClientMenuController extends BaseController {
 
     @FXML
     private void logout(ActionEvent event) throws IOException {
+        database.curLog = null;
         changeWindow(event, "/fxml/role_selector.fxml", "Салон красоты");
     }
 }

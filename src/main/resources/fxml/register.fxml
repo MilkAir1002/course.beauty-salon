@@ -65,7 +65,7 @@
                     <children>
                           <TextField fx:id="lastName" promptText="Фамилия" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
                           <TextField fx:id="firstName" promptText="Имя" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
-                          <TextField fx:id="middleName" promptText="Отчество" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+                          <TextField fx:id="patronymic" promptText="Отчество" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
                           <TextField fx:id="phone" promptText="Телефон" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
                           <TextField fx:id="email" promptText="Почта" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
 
@@ -100,3 +100,5 @@
         </VBox>
     </children>
 </HBox>
+
+

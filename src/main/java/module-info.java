@@ -4,7 +4,7 @@ module ru.bayazitova.maven.coursebeautysalon {
     requires javafx.base;
     requires javafx.graphics;
     requires java.desktop;
-
+    requires java.sql;
 
     opens salon.controller to javafx.fxml;
     exports salon;

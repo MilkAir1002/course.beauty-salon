@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import salon.db.database;
 
 import java.io.IOException;
 
@@ -23,17 +24,32 @@ public class RoleSelectorController extends BaseController {
     private void handleLogin(ActionEvent event) throws IOException {
         Toggle selectedRole = roleGroup.getSelectedToggle();
         String role = selectedRole != null ? selectedRole.getUserData().toString() : "CLIENT";
-
-        if (loginField.getText().trim().isEmpty() || passwordField.getText().isEmpty()) {
+        String login = loginField.getText().trim();
+        String password = passwordField.getText();
+        if (login.isEmpty() || password.isEmpty()) {
             showError("Введите логин и пароль.");
             return;
         }
 
-        System.out.println("Вход: " + loginField.getText() + ", роль: " + role);
-        passwordField.clear();
         if ("ADMIN".equals(role)) {
+            if(!database.loginAdminDB(login, password)){
+                showError("Что-то пошло не так, проверьте данные");
+                return;
+            }
+            database.curLog = login;
+            System.out.println(database.curLog);
+            System.out.println("Вход: " + login + ", роль: " + role);
             changeWindow(event, "/fxml/admin_employers.fxml", "Панель администратора: сотрудники");
-        } else {
+
+        }
+        else {
+            if(!database.loginClientDB(login, password)){
+                showError("Что-то пошло не так, проверьте данные");
+                return;
+            }
+            database.curLog = login;
+            System.out.println(database.curLog);
+            System.out.println("Вход: " + login + ", роль: " + role);
             changeWindow(event, "/fxml/client_menu.fxml", "Личный кабинет");
         }
     }
