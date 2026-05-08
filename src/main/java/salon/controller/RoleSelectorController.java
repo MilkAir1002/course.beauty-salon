@@ -32,10 +32,10 @@ public class RoleSelectorController extends BaseController {
         }
 
         if ("ADMIN".equals(role)) {
-            if(!database.loginAdminDB(login, password)){
-                showError("Что-то пошло не так, проверьте данные");
-                return;
-            }
+//            if(!database.loginAdminDB(login, password)){
+//                showError("Что-то пошло не так, проверьте данные");
+//                return;
+//            }
             database.curLog = login;
             System.out.println(database.curLog);
             System.out.println("Вход: " + login + ", роль: " + role);
@@ -50,12 +50,12 @@ public class RoleSelectorController extends BaseController {
             database.curLog = login;
             System.out.println(database.curLog);
             System.out.println("Вход: " + login + ", роль: " + role);
-            changeWindow(event, "/fxml/client_menu.fxml", "Личный кабинет");
+            changeWindow(event, "/fxml/client/client_menu.fxml", "Личный кабинет");
         }
     }
 
     @FXML
     private void switchToRegister(ActionEvent event) throws IOException {
-        changeWindow(event, "/fxml/register.fxml", "Регистрация");
+        changeWindow(event, "/fxml/client/register.fxml", "Регистрация");
     }
 }

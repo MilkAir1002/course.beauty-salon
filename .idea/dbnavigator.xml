@@ -55,9 +55,7 @@ VALUES
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/clients" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabasePrerequisiteManager">
     <prerequisites />
@@ -67,6 +65,8 @@ VALUES
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.clients" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.services" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.appointments" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />

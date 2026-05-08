@@ -1,4 +1,4 @@
-package salon.controller;
+package salon.controller.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioButton;
+import salon.controller.BaseController;
 import salon.db.database;
 
 import java.io.IOException;

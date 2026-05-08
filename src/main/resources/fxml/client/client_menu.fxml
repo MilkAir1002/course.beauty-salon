@@ -4,15 +4,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.ClientMenuController">
+<VBox prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.ClientMenuController">
     <children>
         <HBox style="-fx-background-color: #E8C0C5;">
             <children>
                 <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="ВЫЙТИ" textFill="WHITE">
+                    <padding>
+                        <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
+                    </padding>
+                    <font>
+                        <Font name="System Bold" size="11.0" />
+                    </font>
+                </Button>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="editProfileButton" mnemonicParsing="false" onAction="#openEditProfile" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="РЕДАКТИРОВАТЬ ДАННЫЕ" textFill="WHITE">
                     <padding>
                         <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
                     </padding>
@@ -41,6 +51,11 @@
                                 <Font size="10.0" />
                             </font>
                         </Label>
+                        <Label fx:id="welcomeLabel" text="Здравствуйте" textFill="#758952">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
                     </children>
                 </VBox>
 
@@ -52,6 +67,11 @@
                             </font>
                         </Button>
                         <Button fx:id="newAppointmentButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openNewAppointment" prefHeight="70.0" style="-fx-background-color: #758952; -fx-background-radius: 10;" text="НОВАЯ ЗАПИСЬ" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="priceListButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openPriceList" prefHeight="70.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="ПРАЙС-ЛИСТ" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>

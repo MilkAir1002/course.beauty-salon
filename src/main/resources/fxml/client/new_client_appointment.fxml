@@ -11,7 +11,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.NewClientAppointmentController">
+<VBox prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.NewClientAppointmentController">
     <children>
         <HBox style="-fx-background-color: #E8C0C5;">
             <children>
