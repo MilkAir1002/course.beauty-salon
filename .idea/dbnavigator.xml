@@ -41,14 +41,8 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="a8c4a086-188e-41df-b484-0668e4babbb3">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[DELETE FROM clients;
-
-INSERT INTO clients (first_name, last_name, patronymic, phone, email, login, gender, password)
-VALUES
-('Иван', 'Иванов', 'Иванович', '+79991234567', 'ivan@mail.ru', 'ivan_dev', 'M', 'pass123'),
-('Мария', 'Петрова', 'Сергеевна', '89005554433', 'masha@yandex.ru', 'mary_star', 'F', 'qwerty777'),
-('Алексей', 'Сидоров', NULL, '+79110001122', 'alex@gmail.com', 'admin', 'M', 'admin123');]]></console>
+    <connection id="982c8c45-4acd-4ed6-8e8e-81598ee2a352">
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -85,7 +79,7 @@ VALUES
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection source-id="" id="a8c4a086-188e-41df-b484-0668e4babbb3" active="true" signed="true">
+      <connection source-id="" id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -105,7 +99,7 @@ VALUES
           <protocol value="" />
           <url-parameters />
           <files>
-            <file path="C:\Users\Kamila.DESKTOP-B95LKMN\Desktop\Study\JavaFXproject\course.beauty-salon\salon.db" schema="main" />
+            <file path="C:\Users\meleh\IdeaProjects\course.beauty-salon\salon.db" schema="salon" />
           </files>
           <type value="NONE" />
           <user value="" />

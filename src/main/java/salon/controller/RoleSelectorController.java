@@ -39,7 +39,7 @@ public class RoleSelectorController extends BaseController {
             database.curLog = login;
             System.out.println(database.curLog);
             System.out.println("Вход: " + login + ", роль: " + role);
-            changeWindow(event, "/fxml/admin_employers.fxml", "Панель администратора: сотрудники");
+            changeWindow(event, "/fxml/admin/admin_employers.fxml", "Панель администратора: сотрудники");
 
         }
         else {

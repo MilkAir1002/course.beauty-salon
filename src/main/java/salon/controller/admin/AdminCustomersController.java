@@ -1,4 +1,4 @@
-package salon.controller;
+package salon.controller.admin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,71 +11,71 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import salon.Employer;
+import salon.Customer;
+import salon.controller.BaseController;
 
 import java.io.IOException;
 
-public class AdminEmployersController extends BaseController {
-
+public class AdminCustomersController extends BaseController {
     // Элементы таблицы
     @FXML
-    private TableView<Employer> tableView;
+    private TableView<Customer> tableView;
     @FXML
-    private TableColumn<Employer, Integer> idColumn;
+    private TableColumn<Customer, Integer> idColumn;
     @FXML
-    private TableColumn<Employer, String> fullNameColumn;
+    private TableColumn<Customer, String> fullNameColumn;
     @FXML
-    private TableColumn<Employer, String> birthDateColumn;
+    private TableColumn<Customer, String> birthDateColumn;
     @FXML
-    private TableColumn<Employer, String> positionColumn;
+    private TableColumn<Customer, String> phoneColumn;
     @FXML
-    private TableColumn<Employer, String> phoneColumn;
+    private TableColumn<Customer, String> additionalInfoColumn;
 
-    // Список сотрудников. Таблица обновляется сама
-    private ObservableList<Employer> employersList = FXCollections.observableArrayList();
+    // Список клиентов. Таблица обновляется сама
+    private ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("formattedBirthDate"));
-        positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
         // Связываем таблицу со списком
-        tableView.setItems(employersList);
+        tableView.setItems(customersList);
     }
 
-    // Добавление сотрудника
+    // Добавление клиента
     @FXML
-    private void addEmployer() throws IOException { // Нажатие на кнопку "Добавить"
+    private void addCustomer() throws IOException { // Нажатие на кнопку "Добавить"
         // Открываем окно с формой
-        Employer result = showEmployerDialog(null); // Открытие пустой формы
+        Customer result = showCustomerDialog(null); // Открытие пустой формы
         if (result != null) { // Если пользователь нажал "Сохранить"
-            employersList.add(result); // Добавление в список
+            customersList.add(result); // Добавление в список
         }
     }
 
-    // Редактирование сотрудника
+    // Редактирование клиента
     @FXML
-    private void editEmployer() throws IOException {
-        Employer selected = tableView.getSelectionModel().getSelectedItem(); // Получение выбранной строки из таблицы
+    private void editCustomer() throws IOException {
+        Customer selected = tableView.getSelectionModel().getSelectedItem(); // Получение выбранной строки из таблицы
         if (selected == null) { // Если запись в таблице не выбрана
-            showAlert("Выберите сотрудника для редактирования");
+            showAlert("Выберите клиента для редактирования");
             return;
         }
 
-        Employer result = showEmployerDialog(selected); // Открытие заполненной формы
+        Customer result = showCustomerDialog(selected); // Открытие заполненной формы
         if (result != null) { // Если пользователь нажал "Сохранить"
-            int index = employersList.indexOf(selected); // Находим индекс старого
-            employersList.set(index, result); // Заменяем
+            int index = customersList.indexOf(selected); // Находим индекс старого
+            customersList.set(index, result); // Заменяем
             tableView.refresh(); // Обновляем таблицу
         }
     }
 
     // Удаление сотрудника
     @FXML
-    private void deleteEmployer() {
-        Employer selected = tableView.getSelectionModel().getSelectedItem(); // Получение выбранной строки из таблицы
+    private void deleteCustomer() {
+        Customer selected = tableView.getSelectionModel().getSelectedItem(); // Получение выбранной строки из таблицы
         if (selected == null) { // Если запись в таблице не выбрана
             showAlert("Выберите сотрудника для удаления");
             return;
@@ -86,34 +86,30 @@ public class AdminEmployersController extends BaseController {
         confirmation.setContentText("Удалить " + selected.getFullName() + "?");
 
         if (confirmation.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) { // Если нажата "OK"
-            employersList.remove(selected); // Удаляем из списка
+            customersList.remove(selected); // Удаляем из списка
         }
     }
 
     // Метод для показа диалога с формой
-    private Employer showEmployerDialog(Employer existingEmployer) throws IOException {
+    private Customer showCustomerDialog(Customer existingCustomer) throws IOException {
         // Загружаем FXML
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/new_employer.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/customer_form.fxml"));
         Parent root = loader.load();
 
         // Получаем элементы управления из формы
         TextField fullNameField = (TextField) root.lookup("#fullName");
         DatePicker birthDatePicker = (DatePicker) root.lookup("#birthDate");
         TextField phoneField = (TextField) root.lookup("#phone");
-        ComboBox<String> postCombo = (ComboBox<String>) root.lookup("#post");
+        TextField additionalInfoField = (TextField) root.lookup("#additionalInfo");
         Button saveButton = (Button) root.lookup("#saveAppointmentButton");
 
-        // Настраиваем выпадающий список
-        postCombo.getItems().addAll("Парикмахер", "Мастер маникюра", "Косметолог", "Визажист", "Массажист", "Администратор");
-
-
-        boolean isEdit = existingEmployer != null; // Определяем режим (Добавление или редактирование)
+        boolean isEdit = existingCustomer != null; // Определяем режим (Добавление или редактирование)
         // Если редактируем - заполняем поля
         if (isEdit) { // Вставляем данные в поля формы
-            fullNameField.setText(existingEmployer.getFullName());
-            birthDatePicker.setValue(existingEmployer.getBirthDate());
-            phoneField.setText(existingEmployer.getPhone());
-            postCombo.setValue(existingEmployer.getPosition());
+            fullNameField.setText(existingCustomer.getFullName());
+            birthDatePicker.setValue(existingCustomer.getBirthDate());
+            phoneField.setText(existingCustomer.getPhone());
+            additionalInfoField.setText(existingCustomer.getAdditionalInfo());
             saveButton.setText("Сохранить");
         }
 
@@ -124,7 +120,7 @@ public class AdminEmployersController extends BaseController {
         dialog.setScene(new Scene(root)); // Создаем и помещаем в сцену VBOX с формой (root)
 
         // Массив для хранения результата
-        final Employer[] result = {null};
+        final Customer[] result = {null};
 
         // Обработчик кнопки сохранить
         saveButton.setOnAction(e -> { // Действия при нажатии на кнопку
@@ -141,26 +137,22 @@ public class AdminEmployersController extends BaseController {
                 showAlert("Введите телефон");
                 return;
             }
-            if (postCombo.getValue() == null) {
-                showAlert("Выберите должность");
-                return;
-            }
 
-            // Создаем сотрудника
+            // Создаем клиента
             if (isEdit) { // Если редактируем
-                result[0] = new Employer(
-                        existingEmployer.getId(), // берем id существующего сотрудника
+                result[0] = new Customer(
+                        existingCustomer.getId(), // берем id существующего сотрудника
                         fullNameField.getText(),
                         birthDatePicker.getValue(),
                         phoneField.getText(),
-                        postCombo.getValue()
+                        additionalInfoField.getText()
                 );
             } else {
-                result[0] = new Employer(
+                result[0] = new Customer(
                         fullNameField.getText(),
                         birthDatePicker.getValue(),
                         phoneField.getText(),
-                        postCombo.getValue()
+                        additionalInfoField.getText()
                 );
             }
 
@@ -183,19 +175,16 @@ public class AdminEmployersController extends BaseController {
     private void logout(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/role_selector.fxml", "Салон красоты");
     }
-
     @FXML
-    private void clients(ActionEvent event) throws IOException {
-        changeWindow(event, "/fxml/admin_customers.fxml", "Панель администратора: клиенты");
+    private void employers(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/admin/admin_employers.fxml", "Панель администратора: сотрудники");
     }
-
     @FXML
     private void appointments(ActionEvent event) throws IOException {
-        changeWindow(event, "/fxml/admin_appointments.fxml", "Панель администратора: записи");
+        changeWindow(event, "/fxml/admin/admin_appointments.fxml", "Панель администратора: записи");
     }
-
     @FXML
     private void services(ActionEvent event) throws IOException {
-        changeWindow(event, "/fxml/admin_services.fxml", "Панель администратора: услуги");
+        changeWindow(event, "/fxml/admin/admin_services.fxml", "Панель администратора: услуги");
     }
 }
