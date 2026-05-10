@@ -20,6 +20,7 @@ public class RoleSelectorController extends BaseController {
     @FXML
     private ToggleGroup roleGroup;
 
+
     @FXML
     private void handleLogin(ActionEvent event) throws IOException {
         Toggle selectedRole = roleGroup.getSelectedToggle();
@@ -32,14 +33,14 @@ public class RoleSelectorController extends BaseController {
         }
 
         if ("ADMIN".equals(role)) {
-//            if(!database.loginAdminDB(login, password)){
-//                showError("Что-то пошло не так, проверьте данные");
-//                return;
-//            }
+            if(!database.loginAdminDB(login, password)){
+                showError("Что-то пошло не так, проверьте данные");
+                return;
+            }
             database.curLog = login;
             System.out.println(database.curLog);
             System.out.println("Вход: " + login + ", роль: " + role);
-            changeWindow(event, "/fxml/admin_employers.fxml", "Панель администратора: сотрудники");
+            changeWindow(event, "/fxml/admin/admin_employers.fxml", "Панель администратора: сотрудники");
 
         }
         else {

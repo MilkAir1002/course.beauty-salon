@@ -3,6 +3,7 @@ package salon.db;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import salon.Service;
+import salon.Admin;
 
 import java.sql.*;
 
@@ -103,21 +104,20 @@ public class database {
             return false;
         }
     }
-
-    public static boolean loginAdminDB(String inputLogin, String inputPass) {
+    public static boolean loginAdminDB(String login, String password) {
         String query = "SELECT password FROM admins WHERE login = ?"; // запрос в таблицу админов
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, inputLogin);
+            pstmt.setString(1, login);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 String dbPassword = rs.getString("password");
 
-                if (dbPassword.equals(inputPass)) {
-                    curLog = inputLogin;
+                if (dbPassword.equals(password)) {
+                    curLog = login;
                     System.out.println("Вход разрешен!");
                     return true;
                 } else {
@@ -133,6 +133,31 @@ public class database {
             e.printStackTrace();
             return false;
         }
+    }
+    // Получить всех администраторов
+    public static ObservableList<Admin> getAllAdmins() {
+        ObservableList<Admin> admins = FXCollections.observableArrayList();
+        String query = "SELECT id, login, full_name, email, phone, created_at, last_login FROM admins ORDER BY id";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                admins.add(new Admin(
+                        rs.getInt("id"),
+                        rs.getString("login"),
+                        rs.getString("full_name"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("created_at"),
+                        rs.getString("last_login")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return admins;
     }
 
     public boolean registerUser(String firstName, String lastName, String patronymic,
@@ -355,4 +380,5 @@ public class database {
             return false;
         }
     }
+
 }

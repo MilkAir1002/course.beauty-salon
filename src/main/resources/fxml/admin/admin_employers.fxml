@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="631.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.AdminEmployersController">
+<HBox prefHeight="631.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.admin.AdminEmployersController">
    <children>
       <VBox alignment="TOP_CENTER" prefWidth="250.0" style="-fx-background-color: #E8C0C5;" VBox.vgrow="ALWAYS">
          <children>
