@@ -19,6 +19,7 @@ public class database {
         private final double price;
         private final String status;
 
+        // конструктор
         public ClientAppointment(int id, String serviceName, String appointmentDate,
                                  String specialist, double price, String status) {
             this.id = id;
