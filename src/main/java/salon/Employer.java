@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Employer {
-    private static int nextId = 1;
     private int id;
     private String fullName;
     private LocalDate birthDate;
@@ -13,7 +12,7 @@ public class Employer {
 
     // Конструктор для создания нового сотрудника
     public Employer(String fullName, LocalDate birthDate, String phone, String position) {
-        this.id = nextId++;
+        this.id = -1;
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.phone = phone;
@@ -48,10 +47,30 @@ public class Employer {
     public String getPosition() {
         return position;
     }
+    // Сеттеры
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
     // Форматированная дата для отображения в таблице
     public String getFormattedBirthDate() {
-        return birthDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        return birthDate != null ? birthDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) : "";
     }
 
     // Переопределяем equals и hashCode для корректного поиска в списке
@@ -60,11 +79,16 @@ public class Employer {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         Employer employer = (Employer) obj;
-        return id == employer.id;
+        return id == employer.id && id != -1; // Сравниваем по ID, если он не временный
     }
 
     @Override
     public int hashCode() {
         return Integer.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return fullName + " (" + position + ")";
     }
 }

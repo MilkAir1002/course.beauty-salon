@@ -94,7 +94,7 @@
                   <TableColumn fx:id="fullNameColumn" text="ФИО" />
                   <TableColumn fx:id="birthDateColumn" text="Дата рождения" />
                   <TableColumn fx:id="phoneColumn" text="Телефон" />
-                  <TableColumn fx:id="additionalInfoColumn" text="Дополнительно" />
+                  <TableColumn fx:id="passwordColumn" text="Пароль" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

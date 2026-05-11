@@ -92,10 +92,9 @@
                <columns>
                   <TableColumn fx:id="idColumn" text="ID" />
                   <TableColumn fx:id="dateColumn" text="Дата" />
-                  <TableColumn fx:id="timeColumn" text="Время" />
                   <TableColumn fx:id="clientColumn" text="Клиент" />
                   <TableColumn fx:id="masterColumn" text="Мастер" />
-                  <TableColumn fx:id="servicesColumn" text="Услуги" />
+                  <TableColumn fx:id="servicesColumn" text="Услуга" />
                   <TableColumn fx:id="costColumn" text="Стоимость" />
                </columns>
                <columnResizePolicy>
