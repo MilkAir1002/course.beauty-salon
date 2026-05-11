@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import salon.Customer;
 import salon.controller.BaseController;
+import salon.db.database;
 
 import java.io.IOException;
 
@@ -29,7 +30,7 @@ public class AdminCustomersController extends BaseController {
     @FXML
     private TableColumn<Customer, String> phoneColumn;
     @FXML
-    private TableColumn<Customer, String> additionalInfoColumn;
+    private TableColumn<Customer, String> passwordColumn;
 
     // Список клиентов. Таблица обновляется сама
     private ObservableList<Customer> customersList = FXCollections.observableArrayList();
@@ -40,9 +41,16 @@ public class AdminCustomersController extends BaseController {
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("formattedBirthDate"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
+        passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
         // Связываем таблицу со списком
         tableView.setItems(customersList);
+        // Загружаем данные из БД
+        loadCustomersFromDatabase();
+    }
+
+    private void loadCustomersFromDatabase() {
+        customersList.clear();
+        customersList.addAll(database.getAllCustomers());
     }
 
     // Добавление клиента
@@ -51,7 +59,12 @@ public class AdminCustomersController extends BaseController {
         // Открываем окно с формой
         Customer result = showCustomerDialog(null); // Открытие пустой формы
         if (result != null) { // Если пользователь нажал "Сохранить"
-            customersList.add(result); // Добавление в список
+            if (database.addCustomer(result)) {
+                customersList.add(result);
+                showInfoAlert("Клиент успешно добавлен");
+            } else {
+                showErrorAlert("Ошибка при добавлении клиента");
+            }
         }
     }
 
@@ -66,9 +79,14 @@ public class AdminCustomersController extends BaseController {
 
         Customer result = showCustomerDialog(selected); // Открытие заполненной формы
         if (result != null) { // Если пользователь нажал "Сохранить"
-            int index = customersList.indexOf(selected); // Находим индекс старого
-            customersList.set(index, result); // Заменяем
-            tableView.refresh(); // Обновляем таблицу
+            if (database.updateCustomer(result)) {
+                int index = customersList.indexOf(selected);
+                customersList.set(index, result);
+                tableView.refresh();
+                showInfoAlert("Клиент успешно обновлен");
+            } else {
+                showErrorAlert("Ошибка при обновлении клиента");
+            }
         }
     }
 
@@ -86,7 +104,12 @@ public class AdminCustomersController extends BaseController {
         confirmation.setContentText("Удалить " + selected.getFullName() + "?");
 
         if (confirmation.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) { // Если нажата "OK"
-            customersList.remove(selected); // Удаляем из списка
+            if (database.deleteCustomer(selected.getId())) {
+                customersList.remove(selected);
+                showInfoAlert("Клиент успешно удален");
+            } else {
+                showErrorAlert("Ошибка при удалении клиента");
+            }
         }
     }
 
@@ -100,7 +123,7 @@ public class AdminCustomersController extends BaseController {
         TextField fullNameField = (TextField) root.lookup("#fullName");
         DatePicker birthDatePicker = (DatePicker) root.lookup("#birthDate");
         TextField phoneField = (TextField) root.lookup("#phone");
-        TextField additionalInfoField = (TextField) root.lookup("#additionalInfo");
+        TextField passwordColumn = (TextField) root.lookup("#password");
         Button saveButton = (Button) root.lookup("#saveAppointmentButton");
 
         boolean isEdit = existingCustomer != null; // Определяем режим (Добавление или редактирование)
@@ -109,14 +132,14 @@ public class AdminCustomersController extends BaseController {
             fullNameField.setText(existingCustomer.getFullName());
             birthDatePicker.setValue(existingCustomer.getBirthDate());
             phoneField.setText(existingCustomer.getPhone());
-            additionalInfoField.setText(existingCustomer.getAdditionalInfo());
+            passwordColumn.setText(existingCustomer.getPassword());
             saveButton.setText("Сохранить");
         }
 
         // Создаем окно
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL); // Определяем тип модальности. Блокирует все окна приложения
-        dialog.setTitle(isEdit ? "Редактирование сотрудника" : "Добавление сотрудника");
+        dialog.setTitle(isEdit ? "Редактирование клиента" : "Добавление клиента");
         dialog.setScene(new Scene(root)); // Создаем и помещаем в сцену VBOX с формой (root)
 
         // Массив для хранения результата
@@ -145,14 +168,14 @@ public class AdminCustomersController extends BaseController {
                         fullNameField.getText(),
                         birthDatePicker.getValue(),
                         phoneField.getText(),
-                        additionalInfoField.getText()
+                        passwordColumn.getText()
                 );
             } else {
                 result[0] = new Customer(
                         fullNameField.getText(),
                         birthDatePicker.getValue(),
                         phoneField.getText(),
-                        additionalInfoField.getText()
+                        passwordColumn.getText()
                 );
             }
 
@@ -160,7 +183,7 @@ public class AdminCustomersController extends BaseController {
         });
 
         dialog.showAndWait(); // Показать окно и ждать пока пользователь не закончит работу
-        return result[0]; // возвращаем сотрудника
+        return result[0]; // возвращаем клиента
     }
 
     // Всплывающее окно с предупреждением
@@ -169,7 +192,21 @@ public class AdminCustomersController extends BaseController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+    private void showInfoAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Информация");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     // Навигация
     @FXML
     private void logout(ActionEvent event) throws IOException {

@@ -2,8 +2,11 @@ package salon.db;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import salon.Customer;
 import salon.Service;
 import salon.Admin;
+import salon.Employer;
+import java.time.LocalDate;
 
 import java.sql.*;
 
@@ -381,4 +384,220 @@ public class database {
         }
     }
 
+    // Получить всех сотрудников из БД
+    public static ObservableList<Employer> getAllEmployers() {
+        ObservableList<Employer> employers = FXCollections.observableArrayList();
+        String query = "SELECT id, full_name, birth_date, phone, position FROM employers ORDER BY id";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                String birthDateStr = rs.getString("birth_date");
+                LocalDate birthDate;
+
+                // Пробуем разные форматы даты
+                try {
+                    // Сначала пробуем стандартный формат YYYY-MM-DD
+                    birthDate = LocalDate.parse(birthDateStr);
+                } catch (java.time.format.DateTimeParseException e1) {
+                    try {
+                        // Пробуем формат с точками DD.MM.YYYY
+                        java.time.format.DateTimeFormatter formatter =
+                                java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                        birthDate = LocalDate.parse(birthDateStr, formatter);
+                    } catch (java.time.format.DateTimeParseException e2) {
+                        // Если оба формата не подходят, выводим ошибку и пропускаем запись
+                        System.err.println("Не удалось распарсить дату: " + birthDateStr);
+                        continue;
+                    }
+                }
+
+                Employer employer = new Employer(
+                        rs.getInt("id"),
+                        rs.getString("full_name"),
+                        birthDate,
+                        rs.getString("phone"),
+                        rs.getString("position")
+                );
+                employers.add(employer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employers;
+    }
+
+    // Добавить нового сотрудника
+    public static boolean addEmployer(Employer employer) {
+        String query = "INSERT INTO employers (full_name, birth_date, phone, position) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setString(1, employer.getFullName());
+            // Сохраняем дату в формате YYYY-MM-DD
+            pstmt.setString(2, employer.getBirthDate().toString()); // Это даст формат YYYY-MM-DD
+            pstmt.setString(3, employer.getPhone());
+            pstmt.setString(4, employer.getPosition());
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    employer.setId(generatedKeys.getInt(1));
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Обновить данные сотрудника
+    public static boolean updateEmployer(Employer employer) {
+        String query = "UPDATE employers SET full_name = ?, birth_date = ?, phone = ?, position = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, employer.getFullName());
+            // Сохраняем дату в формате YYYY-MM-DD
+            pstmt.setString(2, employer.getBirthDate().toString());
+            pstmt.setString(3, employer.getPhone());
+            pstmt.setString(4, employer.getPosition());
+            pstmt.setInt(5, employer.getId());
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Удалить сотрудника
+    public static boolean deleteEmployer(int employerId) {
+        String query = "DELETE FROM employers WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, employerId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    // Получить всех клиентов из БД
+    public static ObservableList<Customer> getAllCustomers() {
+        ObservableList<Customer> customers = FXCollections.observableArrayList();
+        String query = "SELECT id, full_name, birth_date, phone, password FROM clients ORDER BY id";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                String birthDateStr = rs.getString("birth_date");
+                LocalDate birthDate;
+
+                // Пробуем разные форматы даты
+                try {
+                    // Сначала пробуем стандартный формат YYYY-MM-DD
+                    birthDate = LocalDate.parse(birthDateStr);
+                } catch (java.time.format.DateTimeParseException e1) {
+                    try {
+                        // Пробуем формат с точками DD.MM.YYYY
+                        java.time.format.DateTimeFormatter formatter =
+                                java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                        birthDate = LocalDate.parse(birthDateStr, formatter);
+                    } catch (java.time.format.DateTimeParseException e2) {
+                        // Если оба формата не подходят, выводим ошибку и пропускаем запись
+                        System.err.println("Не удалось распарсить дату: " + birthDateStr);
+                        continue;
+                    }
+                }
+
+                Customer customer = new Customer(
+                        rs.getInt("id"),
+                        rs.getString("full_name"),
+                        birthDate,
+                        rs.getString("phone"),
+                        rs.getString("password")
+                );
+                customers.add(customer);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customers;
+    }
+
+    // Добавить нового клиента
+    public static boolean addCustomer(Customer customer) {
+        String query = "INSERT INTO clients (full_name, birth_date, phone, password) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setString(1, customer.getFullName());
+            // Сохраняем дату в формате YYYY-MM-DD
+            pstmt.setString(2, customer.getBirthDate().toString()); // Это даст формат YYYY-MM-DD
+            pstmt.setString(3, customer.getPhone());
+            pstmt.setString(4, customer.getPassword());
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    customer.setId(generatedKeys.getInt(1));
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Обновить данные клиента
+    public static boolean updateCustomer(Customer customer) {
+        String query = "UPDATE clients SET full_name = ?, birth_date = ?, phone = ?, password = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, customer.getFullName());
+            // Сохраняем дату в формате YYYY-MM-DD
+            pstmt.setString(2, customer.getBirthDate().toString());
+            pstmt.setString(3, customer.getPhone());
+            pstmt.setString(4, customer.getPassword());
+            pstmt.setInt(5, customer.getId());
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Удалить клиента
+    public static boolean deleteCustomer(int customerId) {
+        String query = "DELETE FROM clients WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, customerId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

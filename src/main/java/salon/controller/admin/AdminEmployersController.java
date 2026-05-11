@@ -13,6 +13,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import salon.Employer;
 import salon.controller.BaseController;
+import salon.db.database;
 
 import java.io.IOException;
 
@@ -37,6 +38,7 @@ public class AdminEmployersController extends BaseController {
 
     @FXML
     private void initialize() {
+        // Настройка колонок таблицы
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         fullNameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("formattedBirthDate"));
@@ -44,6 +46,15 @@ public class AdminEmployersController extends BaseController {
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         // Связываем таблицу со списком
         tableView.setItems(employersList);
+        // Загружаем данные из базы данных
+        loadEmployersFromDatabase();
+    }
+
+    // Загрузка сотрудников из базы данных
+    private void loadEmployersFromDatabase() {
+        employersList.clear();
+        employersList.addAll(database.getAllEmployers());
+        tableView.refresh();
     }
 
     // Добавление сотрудника
@@ -52,7 +63,13 @@ public class AdminEmployersController extends BaseController {
         // Открываем окно с формой
         Employer result = showEmployerDialog(null); // Открытие пустой формы
         if (result != null) { // Если пользователь нажал "Сохранить"
-            employersList.add(result); // Добавление в список
+            // Сохраняем в базу данных
+            if (database.addEmployer(result)) {
+                loadEmployersFromDatabase(); // Перезагружаем таблицу
+                showInfoAlert("Сотрудник успешно добавлен");
+            } else {
+                showErrorAlert("Ошибка при добавлении сотрудника");
+            }
         }
     }
 
@@ -67,9 +84,13 @@ public class AdminEmployersController extends BaseController {
 
         Employer result = showEmployerDialog(selected); // Открытие заполненной формы
         if (result != null) { // Если пользователь нажал "Сохранить"
-            int index = employersList.indexOf(selected); // Находим индекс старого
-            employersList.set(index, result); // Заменяем
-            tableView.refresh(); // Обновляем таблицу
+            // Обновляем в базе данных
+            if (database.updateEmployer(result)) {
+                loadEmployersFromDatabase(); // Перезагружаем таблицу
+                showInfoAlert("Сотрудник успешно обновлен");
+            } else {
+                showErrorAlert("Ошибка при обновлении сотрудника");
+            }
         }
     }
 
@@ -84,10 +105,17 @@ public class AdminEmployersController extends BaseController {
 
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION); // Создаем всплывающее окно подтверждения (OK/CANCEL)
         confirmation.setTitle("Подтверждение");
+        confirmation.setHeaderText(null);
         confirmation.setContentText("Удалить " + selected.getFullName() + "?");
 
         if (confirmation.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) { // Если нажата "OK"
-            employersList.remove(selected); // Удаляем из списка
+            // Удаляем из базы данных
+            if (database.deleteEmployer(selected.getId())) {
+                loadEmployersFromDatabase(); // Перезагружаем таблицу
+                showInfoAlert("Сотрудник успешно удален");
+            } else {
+                showErrorAlert("Ошибка при удалении сотрудника");
+            }
         }
     }
 
@@ -175,6 +203,22 @@ public class AdminEmployersController extends BaseController {
     // Всплывающее окно с предупреждением
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING); // Создаем окно с предупреждением
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void showInfoAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Информация");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    // Сообщение об ошибке
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка");
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

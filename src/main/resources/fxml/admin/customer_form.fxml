@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="364.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="330.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" prefHeight="64.0" prefWidth="345.0" text="Добавление/редактирование клиента" textAlignment="CENTER" textFill="#758952" wrapText="true">
          <font>
@@ -23,7 +23,7 @@
             <TextField fx:id="fullName" promptText="ФИО" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
             <DatePicker fx:id="birthDate" maxWidth="1.7976931348623157E308" promptText="Дата рождения" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
             <TextField fx:id="phone" promptText="Телефон" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
-            <TextField fx:id="additionalInfo" alignment="TOP_LEFT" prefHeight="62.0" prefWidth="420.0" promptText="Дополнительно" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+            <TextField fx:id="password" alignment="TOP_LEFT" prefHeight="0.0" prefWidth="420.0" promptText="Пароль" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
          </children>
          <VBox.margin>
             <Insets top="20.0" />

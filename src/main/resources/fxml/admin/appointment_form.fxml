@@ -22,10 +22,9 @@
       <VBox maxWidth="420.0" spacing="14.0">
          <children>
             <DatePicker fx:id="birthDate" maxWidth="1.7976931348623157E308" promptText="Дата записи" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
-            <ComboBox prefHeight="25.0" prefWidth="439.0" promptText="Время" />
             <ComboBox prefHeight="25.0" prefWidth="439.0" promptText="Клиент" />
-            <ComboBox prefHeight="25.0" prefWidth="439.0" promptText="Мастер" />
             <ComboBox prefHeight="25.0" prefWidth="439.0" promptText="Услуга" />
+            <ComboBox prefHeight="25.0" prefWidth="439.0" promptText="Мастер" />
             <TextField fx:id="additionalInfo" alignment="TOP_LEFT" prefHeight="3.0" prefWidth="420.0" promptText="Стоимость" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
          </children>
          <VBox.margin>
