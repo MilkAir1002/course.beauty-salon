@@ -11,7 +11,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/role_selector.fxml"));
         primaryStage.setTitle("Салон красоты");
-        primaryStage.setScene(new Scene(root, 830, 631));
+        primaryStage.setScene(new Scene(root, 1030, 831));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

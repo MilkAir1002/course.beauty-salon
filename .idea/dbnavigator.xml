@@ -11,16 +11,19 @@
   </component>
   <component name="DBNavigator.Project.DatabaseAssistantManager">
     <assistants>
+      <assistant-state connection-id="40835a2d-7267-4dba-99b5-3f76f281b813" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+        <tools />
+      </assistant-state>
       <assistant-state connection-id="40835a2d-7267-4dba-99b5-3f76f281b813" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
         <tools />
       </assistant-state>
-      <assistant-state connection-id="40835a2d-7267-4dba-99b5-3f76f281b813" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+      <assistant-state connection-id="6084f2b9-4148-4e81-9a5e-6621d6f4b73d" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
       <assistant-state connection-id="6084f2b9-4148-4e81-9a5e-6621d6f4b73d" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
         <tools />
       </assistant-state>
-      <assistant-state connection-id="6084f2b9-4148-4e81-9a5e-6621d6f4b73d" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+      <assistant-state connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
       <assistant-state connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="517B19548FEF42B7803EECAE7C1DD87B" availability="AVAILABLE" acknowledgement="ENGAGED" selected="true">
@@ -32,13 +35,10 @@
         </chats>
         <tools />
       </assistant-state>
-      <assistant-state connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+      <assistant-state connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
       <assistant-state connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
-        <tools />
-      </assistant-state>
-      <assistant-state connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
     </assistants>
@@ -53,10 +53,18 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="982c8c45-4acd-4ed6-8e8e-81598ee2a352">
-      <console name="Connection" type="STANDARD" schema="salon" session="Main"><![CDATA[select * from employers;
-select * from services;
-select * from appointments;]]></console>
+    <connection id="a8c4a086-188e-41df-b484-0668e4babbb3">
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[DELETE FROM clients;
+
+INSERT INTO clients (first_name, last_name, patronymic, phone, email, login, gender, password)
+VALUES
+('Иван', 'Иванов', 'Иванович', '+79991234567', 'ivan@mail.ru', 'ivan_dev', 'M', 'pass123'),
+('Мария', 'Петрова', 'Сергеевна', '89005554433', 'masha@yandex.ru', 'mary_star', 'F', 'qwerty777'),
+('Алексей', 'Сидоров', NULL, '+79110001122', 'alex@gmail.com', 'admin', 'M', 'admin123');
+
+ALTER TABLE services ADD COLUMN description TEXT;
+ALTER TABLE services ADD COLUMN recommendations TEXT;
+ALTER TABLE services ADD COLUMN image_path TEXT;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -64,21 +72,27 @@ select * from appointments;]]></console>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" object-ref="consoles/Connection" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/sqlite_sequence" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/admins" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/clients" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/appointments" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/employers" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/services" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabasePrerequisiteManager">
     <prerequisites />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" />
+    <connection id="a8c4a086-188e-41df-b484-0668e4babbb3" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" dataset="salon.admins" active-filter-id="" />
-    <filter-actions connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" dataset="salon.appointments" active-filter-id="" />
-    <filter-actions connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" dataset="salon.sqlite_sequence" active-filter-id="" />
-    <filter-actions connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" dataset="salon.clients" active-filter-id="" />
-    <filter-actions connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" dataset="salon.employers" active-filter-id="" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.clients" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.employers" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.services" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.sqlite_sequence" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.admins" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.appointments" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -97,7 +111,7 @@ select * from appointments;]]></console>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection source-id="" id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" active="true" signed="true">
+      <connection source-id="" id="a8c4a086-188e-41df-b484-0668e4babbb3" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -117,7 +131,7 @@ select * from appointments;]]></console>
           <protocol value="" />
           <url-parameters />
           <files>
-            <file path="C:\Users\meleh\IdeaProjects\course.beauty-salon\salon.db" schema="salon" />
+            <file path="C:\Users\Kamila.DESKTOP-B95LKMN\Desktop\Study\JavaFXproject\course.beauty-salon\salon.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
@@ -154,7 +168,7 @@ select * from appointments;]]></console>
           <session-management value="true" />
           <ddl-file-binding value="true" />
           <database-logging value="true" />
-          <connect-automatically value="true" />
+          <connect-automatically value="false" />
           <restore-workspace value="true" />
           <restore-workspace-deep value="false" />
           <environment-type value="default" />
