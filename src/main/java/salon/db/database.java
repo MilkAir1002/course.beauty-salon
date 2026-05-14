@@ -34,7 +34,55 @@ public class database {
         }
 
         // Геттеры, чтобы получать данные из объекта записи
+        public int getId() {
+            return id;
+        }
+
+        public String getServiceName() {
+            return serviceName;
+        }
+
+        public String getAppointmentDate() {
+            return appointmentDate;
+        }
+
+        public String getSpecialist() {
+            return specialist;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+    }
+
+    // Класс для хранения данных о записи (для администратора)
+    public static class AdminAppointment {
+        private final int id;
+        private final String clientLogin;
+        private final String serviceName;
+        private final String appointmentDate;
+        private final String specialist;
+        private final double price;
+        private final String status;
+
+        public AdminAppointment(int id, String clientLogin, String serviceName,
+                                String appointmentDate, String specialist,
+                                double price, String status) {
+            this.id = id;
+            this.clientLogin = clientLogin;
+            this.serviceName = serviceName;
+            this.appointmentDate = appointmentDate;
+            this.specialist = specialist;
+            this.price = price;
+            this.status = status;
+        }
+
         public int getId() { return id; }
+        public String getClientLogin() { return clientLogin; }
         public String getServiceName() { return serviceName; }
         public String getAppointmentDate() { return appointmentDate; }
         public String getSpecialist() { return specialist; }
@@ -66,14 +114,37 @@ public class database {
             this.password = password;
         }
 
-        public String getFirstName() { return firstName; }
-        public String getLastName() { return lastName; }
-        public String getPatronymic() { return patronymic; }
-        public String getPhone() { return phone; }
-        public String getEmail() { return email; }
-        public String getLogin() { return login; }
-        public String getGender() { return gender; }
-        public String getPassword() { return password; }
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public String getPatronymic() {
+            return patronymic;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public String getEmail() {
+            return email;
+        }
+
+        public String getLogin() {
+            return login;
+        }
+
+        public String getGender() {
+            return gender;
+        }
+
+        public String getPassword() {
+            return password;
+        }
     }
 
     public static boolean loginClientDB(String inputLogin, String inputPass) {
@@ -106,6 +177,7 @@ public class database {
             return false;
         }
     }
+
     public static boolean loginAdminDB(String login, String password) {
         String query = "SELECT password FROM admins WHERE login = ?"; // запрос в таблицу админов
 
@@ -136,6 +208,7 @@ public class database {
             return false;
         }
     }
+
     // Получить всех администраторов
     public static ObservableList<Admin> getAllAdmins() {
         ObservableList<Admin> admins = FXCollections.observableArrayList();
@@ -491,41 +564,26 @@ public class database {
         }
         return false;
     }
+
     // Получить всех клиентов из БД
     public static ObservableList<Customer> getAllCustomers() {
         ObservableList<Customer> customers = FXCollections.observableArrayList();
-        String query = "SELECT id, full_name, birth_date, phone, password FROM clients ORDER BY id";
+        String query = "SELECT id, last_name, first_name, patronymic, phone, email, login, gender, password FROM clients ORDER BY id";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
-                String birthDateStr = rs.getString("birth_date");
-                LocalDate birthDate;
-
-                // Пробуем разные форматы даты
-                try {
-                    // Сначала пробуем стандартный формат YYYY-MM-DD
-                    birthDate = LocalDate.parse(birthDateStr);
-                } catch (java.time.format.DateTimeParseException e1) {
-                    try {
-                        // Пробуем формат с точками DD.MM.YYYY
-                        java.time.format.DateTimeFormatter formatter =
-                                java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
-                        birthDate = LocalDate.parse(birthDateStr, formatter);
-                    } catch (java.time.format.DateTimeParseException e2) {
-                        // Если оба формата не подходят, выводим ошибку и пропускаем запись
-                        System.err.println("Не удалось распарсить дату: " + birthDateStr);
-                        continue;
-                    }
-                }
-
                 Customer customer = new Customer(
                         rs.getInt("id"),
-                        rs.getString("full_name"),
-                        birthDate,
+                        rs.getString("last_name"),
+                        rs.getString("first_name"),
+                        rs.getString("patronymic"),
                         rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getString("login"),
+                        rs.getString("gender"), // Здесь будет "M" или "F" из базы
                         rs.getString("password")
                 );
                 customers.add(customer);
@@ -538,16 +596,19 @@ public class database {
 
     // Добавить нового клиента
     public static boolean addCustomer(Customer customer) {
-        String query = "INSERT INTO clients (full_name, birth_date, phone, password) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO clients (last_name, first_name, patronymic, phone, email, login, gender, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            pstmt.setString(1, customer.getFullName());
-            // Сохраняем дату в формате YYYY-MM-DD
-            pstmt.setString(2, customer.getBirthDate().toString()); // Это даст формат YYYY-MM-DD
-            pstmt.setString(3, customer.getPhone());
-            pstmt.setString(4, customer.getPassword());
+            pstmt.setString(1, customer.getLastName());
+            pstmt.setString(2, customer.getFirstName());
+            pstmt.setString(3, customer.getPatronymic());
+            pstmt.setString(4, customer.getPhone());
+            pstmt.setString(5, customer.getEmail());
+            pstmt.setString(6, customer.getLogin());
+            pstmt.setString(7, customer.getGender());
+            pstmt.setString(8, customer.getPassword());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -566,17 +627,20 @@ public class database {
 
     // Обновить данные клиента
     public static boolean updateCustomer(Customer customer) {
-        String query = "UPDATE clients SET full_name = ?, birth_date = ?, phone = ?, password = ? WHERE id = ?";
+        String query = "UPDATE clients SET last_name = ?, first_name = ?, patronymic = ?, phone = ?, email = ?, login = ?, gender = ?, password = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, customer.getFullName());
-            // Сохраняем дату в формате YYYY-MM-DD
-            pstmt.setString(2, customer.getBirthDate().toString());
-            pstmt.setString(3, customer.getPhone());
-            pstmt.setString(4, customer.getPassword());
-            pstmt.setInt(5, customer.getId());
+            pstmt.setString(1, customer.getLastName());
+            pstmt.setString(2, customer.getFirstName());
+            pstmt.setString(3, customer.getPatronymic());
+            pstmt.setString(4, customer.getPhone());
+            pstmt.setString(5, customer.getEmail());
+            pstmt.setString(6, customer.getLogin());
+            pstmt.setString(7, customer.getGender());
+            pstmt.setString(8, customer.getPassword());
+            pstmt.setInt(9, customer.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -593,6 +657,93 @@ public class database {
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             pstmt.setInt(1, customerId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Получить все услуги из БД
+    public static ObservableList<Service> getAllServices() {
+        ObservableList<Service> services = FXCollections.observableArrayList();
+        String query = "SELECT id, name, category, duration, price FROM services ORDER BY id";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                Service service = new Service(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("category"),
+                        rs.getString("duration"),
+                        rs.getDouble("price")
+                );
+                services.add(service);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return services;
+    }
+
+    // Добавить новую услугу
+    public static boolean addService(Service service) {
+        String query = "INSERT INTO services (name, category, duration, price) VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setString(1, service.getName());
+            pstmt.setString(2, service.getCategory());
+            pstmt.setString(3, service.getDuration());
+            pstmt.setDouble(4, service.getPrice());
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    service.setId(generatedKeys.getInt(1));
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Обновить данные услуги
+    public static boolean updateService(Service service) {
+        String query = "UPDATE services SET name = ?, category = ?, duration = ?, price = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, service.getName());
+            pstmt.setString(2, service.getCategory());
+            pstmt.setString(3, service.getDuration());
+            pstmt.setDouble(4, service.getPrice());
+            pstmt.setInt(5, service.getId());
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Удалить услугу
+    public static boolean deleteService(int serviceId) {
+        String query = "DELETE FROM services WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, serviceId);
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

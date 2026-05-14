@@ -5,47 +5,70 @@ import java.time.format.DateTimeFormatter;
 
 public class Customer {
     private int id;
-    private String fullName;
-    private LocalDate birthDate;
-    private String phone;
-    private String password;
+    private String lastName;      // фамилия
+    private String firstName;     // имя
+    private String patronymic;    // отчество
+    private String phone;         // телефон
+    private String email;         // email
+    private String login;         // логин
+    private String gender;        // пол
+    private String password;      // пароль
 
-    // Конструктор для создания нового сотрудника
-    public Customer(String fullName, LocalDate birthDate, String phone, String password) {
+    // Конструктор для создания нового клиента
+    public Customer(String lastName, String firstName, String patronymic,
+                    String phone, String email, String login, String gender, String password) {
         this.id = -1;
-        this.fullName = fullName;
-        this.birthDate = birthDate;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
         this.phone = phone;
+        this.email = email;
+        this.login = login;
+        this.gender = gender;
         this.password = password;
     }
-    // Конструктор для редактирования сотрудника (сохраняется старый id)
-    public Customer(int id, String fullName, LocalDate birthDate, String phone, String password) {
+
+    // Конструктор для редактирования клиента (сохраняется старый id)
+    public Customer(int id, String lastName, String firstName, String patronymic,
+                    String phone, String email, String login, String gender, String password) {
         this.id = id;
-        this.fullName = fullName;
-        this.birthDate = birthDate;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.patronymic = patronymic;
         this.phone = phone;
+        this.email = email;
+        this.login = login;
+        this.gender = gender;
         this.password = password;
     }
 
     // Геттеры
-    public int getId() {return id;}
-    public String getFullName() {return fullName;}
-    public LocalDate getBirthDate() {return birthDate;}
-    public String getPhone() {return phone;}
-    public String getPassword() {return password;}
+    public int getId() { return id; }
+    public String getLastName() { return lastName; }
+    public String getFirstName() { return firstName; }
+    public String getPatronymic() { return patronymic; }
+    public String getPhone() { return phone; }
+    public String getEmail() { return email; }
+    public String getLogin() { return login; }
+    public String getGender() { return gender; }
+    public String getPassword() { return password; }
+
     // Сеттеры
     public void setId(int id) { this.id = id; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
-    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setPatronymic(String patronymic) { this.patronymic = patronymic; }
     public void setPhone(String phone) { this.phone = phone; }
+    public void setEmail(String email) { this.email = email; }
+    public void setLogin(String login) { this.login = login; }
+    public void setGender(String gender) { this.gender = gender; }
     public void setPassword(String password) { this.password = password; }
 
-    // Форматированная дата для отображения в таблице
-    public String getFormattedBirthDate() {
-        return birthDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    // Полное ФИО для отображения
+    public String getFullName() {
+        return lastName + " " + firstName + " " + patronymic;
     }
 
-    // Переопределяем equals и hashCode для корректного поиска в списке
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

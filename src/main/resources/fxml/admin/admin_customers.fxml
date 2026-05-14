@@ -92,8 +92,10 @@
                <columns>
                   <TableColumn fx:id="idColumn" text="ID" />
                   <TableColumn fx:id="fullNameColumn" text="ФИО" />
-                  <TableColumn fx:id="birthDateColumn" text="Дата рождения" />
                   <TableColumn fx:id="phoneColumn" text="Телефон" />
+                  <TableColumn fx:id="emailColumn" text="Email" />
+                  <TableColumn fx:id="loginColumn" text="Логин" />
+                  <TableColumn fx:id="genderColumn" text="Пол" />
                   <TableColumn fx:id="passwordColumn" text="Пароль" />
                </columns>
                <columnResizePolicy>

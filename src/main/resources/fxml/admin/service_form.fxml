@@ -22,7 +22,7 @@
             <children>
                 <TextField fx:id="nameField" promptText="Название" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
                 <ComboBox fx:id="categoryCombo" maxWidth="1.7976931348623157E308" promptText="Категория" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
-                <TextField fx:id="durationField" promptText="Длительность (мин)" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+                <TextField fx:id="durationField" promptText="Длительность" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
                 <TextField fx:id="priceField" promptText="Стоимость" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
             </children>
             <VBox.margin>
