@@ -13,26 +13,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import salon.Service;
 import salon.controller.BaseController;
+import salon.db.database;
 
 import java.io.IOException;
 
 public class AdminServicesController extends BaseController {
 
-    // Элементы таблицы
-    @FXML
-    private TableView<Service> tableView;
-    @FXML
-    private TableColumn<Service, Integer> idColumn;
-    @FXML
-    private TableColumn<Service, String> nameColumn;
-    @FXML
-    private TableColumn<Service, String> categoryColumn;
-    @FXML
-    private TableColumn<Service, String> durationColumn;
-    @FXML
-    private TableColumn<Service, Double> priceColumn;
+    @FXML private TableView<Service> tableView;
+    @FXML private TableColumn<Service, Integer> idColumn;
+    @FXML private TableColumn<Service, String> nameColumn;
+    @FXML private TableColumn<Service, String> categoryColumn;
+    @FXML private TableColumn<Service, String> durationColumn;
+    @FXML private TableColumn<Service, Double> priceColumn;
 
-    // Список услуг. Таблица обновляется сама
     private ObservableList<Service> servicesList = FXCollections.observableArrayList();
 
     @FXML
@@ -56,38 +49,59 @@ public class AdminServicesController extends BaseController {
             }
         });
 
-        // Связываем таблицу со списком
         tableView.setItems(servicesList);
+        loadServicesFromDatabase();
     }
 
-    // Добавление услуги
+    private void loadServicesFromDatabase() {
+        servicesList.clear();
+        servicesList.addAll(database.getAllServices());
+    }
+
     @FXML
-    private void addService() throws IOException {
-        // Открываем окно с формой
-        Service result = showServiceDialog(null);
-        if (result != null) {
-            servicesList.add(result);
+    private void addService() {
+        try {
+            Service result = showServiceDialog(null);
+            if (result != null) {
+                if (database.addService(result)) {
+                    servicesList.add(result);
+                    showInfoAlert("Услуга успешно добавлена");
+                } else {
+                    showErrorAlert("Ошибка при добавлении услуги");
+                }
+            }
+        } catch (IOException e) {
+            showErrorAlert("Ошибка загрузки формы: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    // Редактирование услуги
     @FXML
-    private void editService() throws IOException {
+    private void editService() {
         Service selected = tableView.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showAlert("Выберите услугу для редактирования");
             return;
         }
 
-        Service result = showServiceDialog(selected);
-        if (result != null) {
-            int index = servicesList.indexOf(selected);
-            servicesList.set(index, result);
-            tableView.refresh();
+        try {
+            Service result = showServiceDialog(selected);
+            if (result != null) {
+                if (database.updateService(result)) {
+                    int index = servicesList.indexOf(selected);
+                    servicesList.set(index, result);
+                    tableView.refresh();
+                    showInfoAlert("Услуга успешно обновлена");
+                } else {
+                    showErrorAlert("Ошибка при обновлении услуги");
+                }
+            }
+        } catch (IOException e) {
+            showErrorAlert("Ошибка загрузки формы: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
-    // Удаление услуги
     @FXML
     private void deleteService() {
         Service selected = tableView.getSelectionModel().getSelectedItem();
@@ -102,23 +116,29 @@ public class AdminServicesController extends BaseController {
         confirmation.setContentText("Удалить услугу \"" + selected.getName() + "\"?");
 
         if (confirmation.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-            servicesList.remove(selected);
-            showInfo("Услуга успешно удалена");
+            if (database.deleteService(selected.getId())) {
+                servicesList.remove(selected);
+                showInfoAlert("Услуга успешно удалена");
+            } else {
+                showErrorAlert("Ошибка при удалении услуги");
+            }
         }
     }
 
-    // Метод для показа диалога с формой
     private Service showServiceDialog(Service existingService) throws IOException {
-        // Загружаем FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin/service_form.fxml"));
         Parent root = loader.load();
 
-        // Получаем элементы управления из формы
         TextField nameField = (TextField) root.lookup("#nameField");
         ComboBox<String> categoryCombo = (ComboBox<String>) root.lookup("#categoryCombo");
         TextField durationField = (TextField) root.lookup("#durationField");
         TextField priceField = (TextField) root.lookup("#priceField");
-        Button saveButton = (Button) root.lookup("#saveButton"); // Теперь ищем saveButton, а не saveAppointmentButton
+        Button saveButton = (Button) root.lookup("#saveButton");
+
+        if (nameField == null || categoryCombo == null || durationField == null ||
+                priceField == null || saveButton == null) {
+            throw new IOException("Не удалось найти элементы формы");
+        }
 
         // Настраиваем выпадающий список категорий
         categoryCombo.getItems().addAll(
@@ -132,7 +152,6 @@ public class AdminServicesController extends BaseController {
 
         boolean isEdit = existingService != null;
 
-        // Если редактируем - заполняем поля
         if (isEdit) {
             nameField.setText(existingService.getName());
             categoryCombo.setValue(existingService.getCategory());
@@ -141,20 +160,17 @@ public class AdminServicesController extends BaseController {
             saveButton.setText("Сохранить");
         }
 
-        // Создаем окно
         Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle(isEdit ? "Редактирование услуги" : "Добавление услуги");
         dialog.setScene(new Scene(root));
         dialog.setResizable(false);
 
-        // Массив для хранения результата
         final Service[] result = {null};
 
-        // Обработчик кнопки сохранить
         saveButton.setOnAction(e -> {
             // Валидация
-            if (nameField.getText().isEmpty()) {
+            if (nameField.getText().trim().isEmpty()) {
                 showAlert("Введите название услуги");
                 return;
             }
@@ -162,19 +178,18 @@ public class AdminServicesController extends BaseController {
                 showAlert("Выберите категорию");
                 return;
             }
-            if (durationField.getText().isEmpty()) {
+            if (durationField.getText().trim().isEmpty()) {
                 showAlert("Введите длительность");
                 return;
             }
-            if (priceField.getText().isEmpty()) {
+            if (priceField.getText().trim().isEmpty()) {
                 showAlert("Введите стоимость");
                 return;
             }
 
-            // Проверка корректности цены
             double price;
             try {
-                price = Double.parseDouble(priceField.getText());
+                price = Double.parseDouble(priceField.getText().trim());
                 if (price <= 0) {
                     showAlert("Стоимость должна быть положительным числом");
                     return;
@@ -184,24 +199,22 @@ public class AdminServicesController extends BaseController {
                 return;
             }
 
-            // Создаем услугу
             if (isEdit) {
                 result[0] = new Service(
                         existingService.getId(),
-                        nameField.getText(),
+                        nameField.getText().trim(),
                         categoryCombo.getValue(),
-                        durationField.getText(),
+                        durationField.getText().trim(),
                         price
                 );
             } else {
                 result[0] = new Service(
-                        nameField.getText(),
+                        nameField.getText().trim(),
                         categoryCombo.getValue(),
-                        durationField.getText(),
+                        durationField.getText().trim(),
                         price
                 );
             }
-
             dialog.close();
         });
 
@@ -209,7 +222,6 @@ public class AdminServicesController extends BaseController {
         return result[0];
     }
 
-    // Всплывающее окно с предупреждением
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Ошибка");
@@ -218,7 +230,22 @@ public class AdminServicesController extends BaseController {
         alert.showAndWait();
     }
 
-    // Навигация
+    private void showInfoAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Информация");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     @FXML
     private void logout(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/role_selector.fxml", "Салон красоты");
