@@ -27,6 +27,13 @@ public class ClientMenuController extends BaseController {
     }
 
     @FXML
+    private void openProfile(ActionEvent event) throws IOException {
+        // Теперь открываем профиль из центрального меню
+        Stage stage = openNewWindow("/fxml/client/edit_client.fxml", "Личные данные");
+        stage.setOnHidden(e -> updateWelcomeText());
+    }
+
+    @FXML
     private void openAppointments(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/client/client_appointments.fxml", "Мои записи");
     }
@@ -37,14 +44,14 @@ public class ClientMenuController extends BaseController {
     }
 
     @FXML
-    private void openPriceList(ActionEvent event) throws IOException {
-        changeWindow(event, "/fxml/client/client_price_list.fxml", "Прайс-лист");
+    private void openServiceCards(ActionEvent event) throws IOException {
+        // Убедитесь, что файл fxml лежит именно по этому пути
+        changeWindow(event, "/fxml/client/service_cards.fxml", "Карточки услуг");
     }
 
     @FXML
-    private void openEditProfile() throws IOException {
-        Stage stage = openNewWindow("/fxml/client/edit_client.fxml", "Редактирование данных клиента");
-        stage.setOnHidden(event -> updateWelcomeText());
+    private void openPriceList(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/client/client_price_list.fxml", "Прайс-лист");
     }
 
     @FXML

@@ -15,7 +15,7 @@ public class BaseController {
         Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle(title);
-        stage.setScene(new Scene(root, 830, 631));
+        stage.setScene(new Scene(root, 1030, 831));
         stage.show();
     }
 
