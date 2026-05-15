@@ -373,6 +373,60 @@ public class database {
         return services;
     }
 
+    public static ObservableList<Service> getServicesWithEmployeeAbilities() {
+        ObservableList<Service> services = FXCollections.observableArrayList();
+        String query = "SELECT DISTINCT s.id, s.name, s.category, s.duration, s.price " +
+                "FROM services s " +
+                "JOIN employee_abilities ea ON ea.service_id = s.id " +
+                "JOIN employers e ON e.id = ea.employer_id " +
+                "ORDER BY s.category, s.name";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                services.add(new Service(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("category"),
+                        rs.getString("duration"),
+                        rs.getDouble("price")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            services.clear();
+        }
+
+        return services;
+    }
+
+    public static ObservableList<String> getSpecialistsByServiceId(int serviceId) {
+        ObservableList<String> specialists = FXCollections.observableArrayList();
+        String query = "SELECT e.full_name " +
+                "FROM employers e " +
+                "JOIN employee_abilities ea ON ea.employer_id = e.id " +
+                "WHERE ea.service_id = ? " +
+                "ORDER BY e.full_name";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, serviceId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                specialists.add(rs.getString("full_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            specialists.clear();
+        }
+
+        return specialists;
+    }
+
     public static boolean addCurrentClientAppointment(Service service, String appointmentDate, String specialist) {
         if (curLog == null || service == null || appointmentDate == null || specialist == null) {
             return false;

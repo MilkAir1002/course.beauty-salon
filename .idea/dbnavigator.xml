@@ -71,14 +71,7 @@ ALTER TABLE services ADD COLUMN image_path TEXT;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/sqlite_sequence" />
-      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/admins" />
-      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/clients" />
-      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/appointments" />
-      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/employers" />
-      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/services" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabasePrerequisiteManager">
     <prerequisites />

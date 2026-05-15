@@ -25,8 +25,9 @@ public class NewClientAppointmentController extends BaseController {
 
     @FXML
     private void initialize() {
-        ObservableList<Service> services = database.getServicesCatalog();
+        ObservableList<Service> services = database.getServicesWithEmployeeAbilities();
         serviceComboBox.setItems(services);
+        specialistComboBox.setDisable(true);
 
         serviceComboBox.setConverter(new StringConverter<Service>() {
             @Override
@@ -40,17 +41,17 @@ public class NewClientAppointmentController extends BaseController {
             }
         });
 
-        specialistComboBox.setItems(javafx.collections.FXCollections.observableArrayList(
-                "Анна Смирнова",
-                "Мария Иванова",
-                "Елена Волкова"
-        ));
-
         serviceComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            specialistComboBox.getSelectionModel().clearSelection();
+            specialistComboBox.getItems().clear();
+
             if (newVal != null) {
                 priceField.setText(newVal.getPrice() + " руб.");
+                specialistComboBox.setItems(database.getSpecialistsByServiceId(newVal.getId()));
+                specialistComboBox.setDisable(specialistComboBox.getItems().isEmpty());
             } else {
                 priceField.clear();
+                specialistComboBox.setDisable(true);
             }
         });
     }
