@@ -8,9 +8,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <VBox prefHeight="631.0" prefWidth="830.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.NewClientAppointmentController">
     <children>
         <HBox style="-fx-background-color: #E8C0C5;">
@@ -33,7 +34,11 @@
             <children>
                 <VBox alignment="CENTER" spacing="5.0">
                     <children>
-                        <Circle fill="#F4E2E4" radius="30.0" stroke="#E8C0C5" strokeType="INSIDE" strokeWidth="2.0" />
+                        <ImageView fitHeight="70" fitWidth="70" preserveRatio="false">
+                            <image>
+                                <Image url="@../logo1.png" />
+                            </image>
+                        </ImageView>
                         <Label text="НОВАЯ ЗАПИСЬ" textFill="#758952">
                             <font>
                                 <Font name="Serif Bold" size="28.0" />

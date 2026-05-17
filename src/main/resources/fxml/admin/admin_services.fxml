@@ -5,95 +5,109 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="631.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.admin.AdminServicesController">
+<HBox prefHeight="831.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.admin.AdminServicesController">
    <children>
-      <VBox alignment="TOP_CENTER" prefWidth="250.0" style="-fx-background-color: #E8C0C5;" VBox.vgrow="ALWAYS">
+      <StackPane prefHeight="831.0" prefWidth="305.0">
          <children>
-            <VBox alignment="CENTER" spacing="5.0">
+            <ImageView fitHeight="835.0" fitWidth="360.0" preserveRatio="false">
+               <image>
+                  <Image url="@../FON2.png" />
+               </image>
+            </ImageView>
+
+            <VBox alignment="TOP_CENTER" prefHeight="831.0" prefWidth="300.0" style="-fx-background-color: rgba(232, 192, 197, 0.85);">
                <children>
-                  <Circle fill="#F4E2E4" radius="35.0" stroke="#E8C0C5" strokeType="INSIDE" strokeWidth="2.0">
-                     <VBox.margin>
-                        <Insets top="6.0" />
-                     </VBox.margin>
-                  </Circle>
-                  <Label text="ЭСТЕТИКА" textFill="#758952">
+                  <VBox alignment="CENTER" spacing="5.0">
+                     <children>
+                        <ImageView fitHeight="139.0" fitWidth="132.0" preserveRatio="true">
+                           <Image url="@../logo2.png" />
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label text="ЭСТЕТИКА" textFill="#758952">
+                           <font>
+                              <Font name="Serif Bold" size="46.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button fx:id="logoutButton11" maxWidth="220.0" mnemonicParsing="false" onAction="#employers" prefHeight="43.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Сотрудники" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
+                     </padding>
                      <font>
-                        <Font name="Serif Bold" size="28.0" />
+                        <Font name="System Bold" size="26.0" />
                      </font>
-                  </Label>
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="30.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="logoutButton111" maxWidth="220.0" mnemonicParsing="false" onAction="#clients" prefHeight="32.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Клиенты" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="logoutButton1111" maxWidth="220.0" mnemonicParsing="false" onAction="#appointments" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Записи" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="logoutButton11111" maxWidth="220.0" mnemonicParsing="false" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Услуги" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <VBox VBox.vgrow="ALWAYS" />
+                  <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: transparent;" text="Выйти" textFill="WHITE" underline="true">
+                     <padding>
+                        <Insets bottom="20.0" left="18.0" right="18.0" top="6.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="27.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
-            <Button fx:id="logoutButton11" maxWidth="160.0" mnemonicParsing="false" onAction="#employers" prefHeight="43.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Сотрудники" textFill="WHITE">
-               <padding>
-                  <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="15.0" top="30.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="logoutButton111" maxWidth="160.0" mnemonicParsing="false" onAction="#clients" prefHeight="32.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Клиенты" textFill="WHITE">
-               <padding>
-                  <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="logoutButton1111" maxWidth="160.0" mnemonicParsing="false" onAction="#appointments" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Записи" textFill="WHITE">
-               <padding>
-                  <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="logoutButton11111" maxWidth="160.0" mnemonicParsing="false" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Услуги" textFill="WHITE">
-               <padding>
-                  <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Button>
-            <VBox VBox.vgrow="ALWAYS" />
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: transparent;" text="Выйти" textFill="WHITE" underline="true">
-               <padding>
-                  <Insets bottom="20.0" left="18.0" right="18.0" top="6.0" />
-               </padding>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Button>
          </children>
-      </VBox>
+      </StackPane>
+
       <VBox HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
          <children>
             <TableView fx:id="tableView" prefHeight="0.0" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="idColumn" text="ID" />
-                  <TableColumn fx:id="nameColumn" text="Название" />
-                  <TableColumn fx:id="categoryColumn" text="Категория" />
-                  <TableColumn fx:id="durationColumn" text="Длительность" />
+                  <TableColumn fx:id="idColumn" maxWidth="20.0" minWidth="20.0" prefWidth="35.0" text="ID" />
+                  <TableColumn fx:id="nameColumn" prefWidth="253.0" text="Название" />
+                  <TableColumn fx:id="categoryColumn" prefWidth="167.0" text="Категория" />
+                  <TableColumn fx:id="durationColumn" prefWidth="113.0" text="Длительность" />
                   <TableColumn fx:id="priceColumn" text="Стоимость" />
                </columns>
                <columnResizePolicy>
@@ -102,19 +116,19 @@
             </TableView>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button fx:id="saveAppointmentButton" mnemonicParsing="false" onAction="#addService" prefHeight="43.0" prefWidth="165.0" style="-fx-border-radius: 50; -fx-background-color: #758952; -fx-border-color: white; -fx-border-width: 2; -fx-background-radius: 50;" text="Добавить" textFill="WHITE">
+                  <Button fx:id="logoutButton112" mnemonicParsing="false" onAction="#addService" prefHeight="43.0" prefWidth="210.0" style="-fx-border-radius: 50; -fx-background-color: #758952; -fx-border-color: white; -fx-border-width: 2; -fx-background-radius: 50;" text="Добавить" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logoutButton1121" mnemonicParsing="false" onAction="#deleteService" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Удалить" textFill="WHITE">
+                  <Button fx:id="logoutButton1121" mnemonicParsing="false" onAction="#deleteService" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Удалить" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logoutButton1123" mnemonicParsing="false" onAction="#editService" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Редактировать" textFill="WHITE">
+                  <Button fx:id="logoutButton1123" mnemonicParsing="false" onAction="#editService" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Редактировать" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="System Bold" size="23.0" />
                      </font>
                   </Button>
                </children>
