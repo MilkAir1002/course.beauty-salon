@@ -199,29 +199,6 @@ public class AdminEmployersController extends BaseController {
         return result[0]; // возвращаем сотрудника
     }
 
-    // Всплывающее окно с предупреждением
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING); // Создаем окно с предупреждением
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-    private void showInfoAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Информация");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    // Сообщение об ошибке
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     // Навигация
     @FXML
     private void logout(ActionEvent event) throws IOException {

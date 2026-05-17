@@ -2,10 +2,8 @@ package salon.db;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import salon.Customer;
-import salon.Service;
-import salon.Admin;
-import salon.Employer;
+import salon.*;
+
 import java.time.LocalDate;
 
 import java.sql.*;
@@ -810,5 +808,46 @@ public class database {
             e.printStackTrace();
         }
         return false;
+    }
+    // Получить все записи для администратора (возвращает список Appointment)
+    public static ObservableList<Appointment> getAllAppointmentsForAdmin() {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        String query = "SELECT id, client_login, service_name, appointment_date, specialist, price, status " +
+                "FROM appointments ORDER BY appointment_date DESC, id DESC";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            while (rs.next()) {
+                appointments.add(new Appointment(
+                        rs.getInt("id"),
+                        rs.getString("client_login"),
+                        rs.getString("service_name"),
+                        rs.getString("appointment_date"),
+                        rs.getString("specialist"),
+                        rs.getDouble("price"),
+                        rs.getString("status")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return appointments;
+    }
+
+    // Удалить запись
+    public static boolean deleteAppointment(int appointmentId) {
+        String query = "DELETE FROM appointments WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setInt(1, appointmentId);
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

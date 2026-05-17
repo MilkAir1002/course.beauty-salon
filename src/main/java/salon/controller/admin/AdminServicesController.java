@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import salon.Service;
 import salon.controller.BaseController;
 import salon.db.database;
-
 import java.io.IOException;
 
 public class AdminServicesController extends BaseController {
@@ -219,30 +218,6 @@ public class AdminServicesController extends BaseController {
 
         dialog.showAndWait();
         return result[0];
-    }
-
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Ошибка");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showInfoAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Информация");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     @FXML

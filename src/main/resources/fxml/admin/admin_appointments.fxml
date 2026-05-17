@@ -110,7 +110,7 @@
                   <TableColumn fx:id="masterColumn" text="Мастер" />
                   <TableColumn fx:id="servicesColumn" text="Услуга" />
                   <TableColumn fx:id="costColumn" text="Стоимость" />
-                  <TableColumn fx:id="costColumn1" text="Состояние" />
+                  <TableColumn fx:id="statusColumn" text="Состояние" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -118,17 +118,17 @@
             </TableView>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button fx:id="logoutButton112" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-border-radius: 50; -fx-background-color: #758952; -fx-border-color: white; -fx-border-width: 2; -fx-background-radius: 50;" text="Добавить" textFill="WHITE">
+                  <Button fx:id="logoutButton112" onAction="#addAppointment" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-border-radius: 50; -fx-background-color: #758952; -fx-border-color: white; -fx-border-width: 2; -fx-background-radius: 50;" text="Добавить" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logoutButton1121" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Удалить" textFill="WHITE">
+                  <Button fx:id="logoutButton1121" onAction="#deleteAppointment" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Удалить" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logoutButton1123" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Редактировать" textFill="WHITE">
+                  <Button fx:id="logoutButton1123" onAction="#editAppointment" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Редактировать" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>

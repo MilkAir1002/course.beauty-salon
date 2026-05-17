@@ -5,107 +5,55 @@ import java.time.format.DateTimeFormatter;
 
 public class Appointment {
     private int id;
-    private LocalDate date;
-    private String time;
-    private String client;
-    private String master;
-    private String services;
-    private double cost;
-
+    private String clientLogin;
+    private String serviceName;
+    private String appointmentDate;
+    private String specialist;
+    private double price;
+    private String status;
 
     // Конструктор для создания новой записи
-    public Appointment(LocalDate date, String time, String client, String master, String services, double cost) {
-        this.date = date;
-        this.time = time;
-        this.client = client;
-        this.master = master;
-        this.services = services;
-        this.cost = cost;
+    public Appointment(String clientLogin, String serviceName, String appointmentDate, String specialist, double price, String status) {
+        this.id = -1;
+        this.clientLogin = clientLogin;
+        this.serviceName = serviceName;
+        this.appointmentDate = appointmentDate;
+        this.specialist = specialist;
+        this.price = price;
+        this.status = status;
     }
 
     // Конструктор для редактирования записи
-    public Appointment(int id, LocalDate date, String time, String client, String master, String services, double cost) {
+    public Appointment(int id, String clientLogin, String serviceName, String appointmentDate, String specialist, double price, String status) {
         this.id = id;
-        this.date = date;
-        this.time = time;
-        this.client = client;
-        this.master = master;
-        this.services = services;
-        this.cost = cost;
+        this.clientLogin = clientLogin;
+        this.serviceName = serviceName;
+        this.appointmentDate = appointmentDate;
+        this.specialist = specialist;
+        this.price = price;
+        this.status = status;
     }
 
-    // Геттеры и сеттеры
-    public int getId() {
-        return id;
-    }
+    // Геттеры
+    public int getId() { return id; }
+    public String getClientLogin() { return clientLogin; }
+    public String getServiceName() { return serviceName; }
+    public String getAppointmentDate() { return appointmentDate; }
+    public String getSpecialist() { return specialist; }
+    public double getPrice() { return price; }
+    public String getStatus() { return status; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    public String getMaster() {
-        return master;
-    }
-
-    public void setMaster(String master) {
-        this.master = master;
-    }
-
-    public String getServices() {
-        return services;
-    }
-
-    public void setServices(String services) {
-        this.services = services;
-    }
-
-    public double getCost() {
-        return cost;
-    }
-
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
-
-    // Форматированная дата для отображения в таблице
-    public String getFormattedDate() {
-        return date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-    }
+    // Сеттеры
+    public void setId(int id) { this.id = id; }
+    public void setClientLogin(String clientLogin) { this.clientLogin = clientLogin; }
+    public void setServiceName(String serviceName) { this.serviceName = serviceName; }
+    public void setAppointmentDate(String appointmentDate) { this.appointmentDate = appointmentDate; }
+    public void setSpecialist(String specialist) { this.specialist = specialist; }
+    public void setPrice(double price) { this.price = price; }
+    public void setStatus(String status) { this.status = status; }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Appointment appointment = (Appointment) obj;
-        return id == appointment.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(id);
+    public String toString() {
+        return serviceName + " - " + appointmentDate + " - " + specialist;
     }
 }
