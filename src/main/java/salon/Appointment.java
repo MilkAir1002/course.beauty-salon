@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Appointment {
     private int id;
     private String clientLogin;
+    private int serviceId;
     private String serviceName;
     private String appointmentDate;
     private String specialist;
@@ -13,9 +14,11 @@ public class Appointment {
     private String status;
 
     // Конструктор для создания новой записи
-    public Appointment(String clientLogin, String serviceName, String appointmentDate, String specialist, double price, String status) {
+    public Appointment(String clientLogin, int serviceId, String serviceName,
+                       String appointmentDate, String specialist, double price, String status) {
         this.id = -1;
         this.clientLogin = clientLogin;
+        this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.appointmentDate = appointmentDate;
         this.specialist = specialist;
@@ -24,9 +27,11 @@ public class Appointment {
     }
 
     // Конструктор для редактирования записи
-    public Appointment(int id, String clientLogin, String serviceName, String appointmentDate, String specialist, double price, String status) {
+    public Appointment(int id, String clientLogin, int serviceId, String serviceName,
+                       String appointmentDate, String specialist, double price, String status) {
         this.id = id;
         this.clientLogin = clientLogin;
+        this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.appointmentDate = appointmentDate;
         this.specialist = specialist;
@@ -36,6 +41,7 @@ public class Appointment {
 
     // Геттеры
     public int getId() { return id; }
+    public int getServiceId() { return serviceId; }
     public String getClientLogin() { return clientLogin; }
     public String getServiceName() { return serviceName; }
     public String getAppointmentDate() { return appointmentDate; }
@@ -45,6 +51,7 @@ public class Appointment {
 
     // Сеттеры
     public void setId(int id) { this.id = id; }
+    public void setServiceId(int serviceId) { this.serviceId = serviceId;}
     public void setClientLogin(String clientLogin) { this.clientLogin = clientLogin; }
     public void setServiceName(String serviceName) { this.serviceName = serviceName; }
     public void setAppointmentDate(String appointmentDate) { this.appointmentDate = appointmentDate; }

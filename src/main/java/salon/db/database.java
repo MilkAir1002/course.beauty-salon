@@ -373,24 +373,23 @@ public class database {
 
     public static ObservableList<Service> getServicesWithEmployeeAbilities() {
         ObservableList<Service> services = FXCollections.observableArrayList();
-        String query = "SELECT DISTINCT s.id, s.name, s.category, s.duration, s.price " +
-                "FROM services s " +
-                "JOIN employee_abilities ea ON ea.service_id = s.id " +
-                "JOIN employers e ON e.id = ea.employer_id " +
-                "ORDER BY s.category, s.name";
+
+        String query = "SELECT DISTINCT id, name, category, duration, price, service_id FROM services ORDER BY category, name";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                services.add(new Service(
+                Service service = new Service(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("category"),
                         rs.getString("duration"),
                         rs.getDouble("price")
-                ));
+                );
+                service.setServiceId(rs.getInt("service_id"));
+                services.add(service);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -402,11 +401,8 @@ public class database {
 
     public static ObservableList<String> getSpecialistsByServiceId(int serviceId) {
         ObservableList<String> specialists = FXCollections.observableArrayList();
-        String query = "SELECT e.full_name " +
-                "FROM employers e " +
-                "JOIN employee_abilities ea ON ea.employer_id = e.id " +
-                "WHERE ea.service_id = ? " +
-                "ORDER BY e.full_name";
+
+        String query = "SELECT full_name FROM employers WHERE service_id = ? ORDER BY full_name";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -809,10 +805,10 @@ public class database {
         }
         return false;
     }
-    // Получить все записи для администратора (возвращает список Appointment)
-    public static ObservableList<Appointment> getAllAppointmentsForAdmin() {
+    // Получить все записи
+    public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
-        String query = "SELECT id, client_login, service_name, appointment_date, specialist, price, status " +
+        String query = "SELECT id, client_login, service_id, service_name, appointment_date, specialist, price, status " +
                 "FROM appointments ORDER BY appointment_date DESC, id DESC";
 
         try (Connection conn = DriverManager.getConnection(database.url);
@@ -820,20 +816,97 @@ public class database {
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
+                String appointmentDate = rs.getString("appointment_date");
+                String status = rs.getString("status");
+
+                // Проверяем, прошла ли дата и статус не "отменено"
+                if (isDatePassed(appointmentDate) && !"отменено".equals(status)) {
+                    status = "исполнено";
+                }
+
                 appointments.add(new Appointment(
                         rs.getInt("id"),
                         rs.getString("client_login"),
+                        rs.getInt("service_id"),
                         rs.getString("service_name"),
-                        rs.getString("appointment_date"),
+                        appointmentDate,
                         rs.getString("specialist"),
                         rs.getDouble("price"),
-                        rs.getString("status")
+                        status
                 ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return appointments;
+    }
+
+    // Вспомогательный метод для проверки даты
+    private static boolean isDatePassed(String dateStr) {
+        if (dateStr == null || dateStr.isEmpty()) return false;
+
+        try {
+            LocalDate appointmentDate = LocalDate.parse(dateStr); // Формат YYYY-MM-DD
+            LocalDate today = LocalDate.now();
+            return appointmentDate.isBefore(today);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // Добавить новую запись
+    public static boolean addAppointment(Appointment appointment) {
+        String query = "INSERT INTO appointments (client_login, service_id, service_name, appointment_date, specialist, price, status) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            pstmt.setString(1, appointment.getClientLogin());
+            pstmt.setInt(2, appointment.getServiceId());
+            pstmt.setString(3, appointment.getServiceName());
+            pstmt.setString(4, appointment.getAppointmentDate());
+            pstmt.setString(5, appointment.getSpecialist());
+            pstmt.setDouble(6, appointment.getPrice());
+            pstmt.setString(7, appointment.getStatus());
+
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                ResultSet generatedKeys = pstmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    appointment.setId(generatedKeys.getInt(1));
+                }
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Редактировать запись
+    public static boolean updateAppointment(Appointment appointment) {
+        String query = "UPDATE appointments SET client_login = ?, service_id = ?, service_name = ?, appointment_date = ?, " +
+                "specialist = ?, price = ?, status = ? WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, appointment.getClientLogin());
+            pstmt.setInt(2, appointment.getServiceId());
+            pstmt.setString(3, appointment.getServiceName());
+            pstmt.setString(4, appointment.getAppointmentDate());
+            pstmt.setString(5, appointment.getSpecialist());
+            pstmt.setDouble(6, appointment.getPrice());
+            pstmt.setString(7, appointment.getStatus());
+            pstmt.setInt(8, appointment.getId());
+
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // Удалить запись
@@ -850,4 +923,6 @@ public class database {
             return false;
         }
     }
+
+
 }

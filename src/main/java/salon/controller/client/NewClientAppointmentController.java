@@ -47,7 +47,7 @@ public class NewClientAppointmentController extends BaseController {
 
             if (newVal != null) {
                 priceField.setText(newVal.getPrice() + " руб.");
-                specialistComboBox.setItems(database.getSpecialistsByServiceId(newVal.getId()));
+                specialistComboBox.setItems(database.getSpecialistsByServiceId(newVal.getServiceId()));
                 specialistComboBox.setDisable(specialistComboBox.getItems().isEmpty());
             } else {
                 priceField.clear();
