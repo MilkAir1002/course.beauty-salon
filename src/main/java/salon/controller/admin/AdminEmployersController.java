@@ -135,7 +135,6 @@ public class AdminEmployersController extends BaseController {
         // Настраиваем выпадающий список
         postCombo.getItems().addAll("Парикмахер", "Мастер маникюра", "Косметолог", "Визажист", "Массажист");
 
-
         boolean isEdit = existingEmployer != null; // Определяем режим (Добавление или редактирование)
         // Если редактируем - заполняем поля
         if (isEdit) { // Вставляем данные в поля формы

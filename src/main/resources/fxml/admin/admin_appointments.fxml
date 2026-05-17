@@ -110,6 +110,7 @@
                   <TableColumn fx:id="masterColumn" text="Мастер" />
                   <TableColumn fx:id="servicesColumn" text="Услуга" />
                   <TableColumn fx:id="costColumn" text="Стоимость" />
+                  <TableColumn fx:id="costColumn1" text="Состояние" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

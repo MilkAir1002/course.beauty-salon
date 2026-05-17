@@ -9,6 +9,7 @@ public class Employer {
     private LocalDate birthDate;
     private String phone;
     private String position;
+    private int serviceId;
 
     // Конструктор для создания нового сотрудника
     public Employer(String fullName, LocalDate birthDate, String phone, String position) {
@@ -17,6 +18,7 @@ public class Employer {
         this.birthDate = birthDate;
         this.phone = phone;
         this.position = position;
+        this.serviceId = getServiceIdByPosition(position);
     }
     // Конструктор для редактирования сотрудника (сохраняется старый id)
     public Employer(int id, String fullName, LocalDate birthDate, String phone, String position) {
@@ -25,48 +27,49 @@ public class Employer {
         this.birthDate = birthDate;
         this.phone = phone;
         this.position = position;
+        this.serviceId = getServiceIdByPosition(position);
+    }
+
+    // Вспомогательный метод для определения service_id по должности
+    private int getServiceIdByPosition(String position) {
+        switch (position) {
+            case "Парикмахер":
+                return 1;
+            case "Мастер маникюра":
+                return 2;
+            case "Косметолог":
+                return 3;
+            case "Массажист":
+                return 4;
+            case "Визажист":
+                return 5;
+            default:
+                return 0;
+        }
     }
 
     // Геттеры
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
+    public String getFullName() {return fullName;}
+    public LocalDate getBirthDate() {return birthDate;}
+    public String getPhone() {return phone;}
+    public String getPosition() {return position;}
+    public int getServiceId() {return serviceId;}
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getPosition() {
-        return position;
-    }
     // Сеттеры
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    public void setFullName(String fullName) {this.fullName = fullName;}
 
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
+    public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate;}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+    public void setPhone(String phone) {this.phone = phone;}
 
     public void setPosition(String position) {
         this.position = position;
+        this.serviceId = getServiceIdByPosition(position); // Обновляем serviceId при смене должности
     }
+    public void setServiceId(int serviceId) {this.serviceId = serviceId;}
 
     // Форматированная дата для отображения в таблице
     public String getFormattedBirthDate() {
