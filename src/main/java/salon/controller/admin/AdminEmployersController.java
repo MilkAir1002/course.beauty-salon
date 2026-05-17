@@ -133,7 +133,7 @@ public class AdminEmployersController extends BaseController {
         Button saveButton = (Button) root.lookup("#saveAppointmentButton");
 
         // Настраиваем выпадающий список
-        postCombo.getItems().addAll("Парикмахер", "Мастер маникюра", "Косметолог", "Визажист", "Массажист", "Администратор");
+        postCombo.getItems().addAll("Парикмахер", "Мастер маникюра", "Косметолог", "Визажист", "Массажист");
 
 
         boolean isEdit = existingEmployer != null; // Определяем режим (Добавление или редактирование)

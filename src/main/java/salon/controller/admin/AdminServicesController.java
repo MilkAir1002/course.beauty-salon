@@ -142,12 +142,11 @@ public class AdminServicesController extends BaseController {
 
         // Настраиваем выпадающий список категорий
         categoryCombo.getItems().addAll(
-                "Парикмахерские услуги",
+                "Парикмахерский зал",
                 "Ногтевой сервис",
                 "Косметология",
                 "Массаж",
-                "Визаж",
-                "Другое"
+                "Услуга визажиста"
         );
 
         boolean isEdit = existingService != null;

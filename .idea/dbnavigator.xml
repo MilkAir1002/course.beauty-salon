@@ -65,29 +65,33 @@ ADD COLUMN service_id INT;
 ALTER TABLE services
 ADD COLUMN service_id INT;
 
-UPDATE employers SET service_id = 1 WHERE position = 'Визажист';
-UPDATE employers SET service_id = 2 WHERE position = 'Массажист';
-UPDATE employers SET service_id = 3 WHERE position = 'Парикмахер';
-UPDATE employers SET service_id = 4 WHERE position = 'Мастер маникюра';
-UPDATE employers SET service_id = 5 WHERE position = 'Косметолог';
+UPDATE employers SET service_id = 1 WHERE position = 'Парикмахер';
+UPDATE employers SET service_id = 2 WHERE position = 'Мастер маникюра';
+UPDATE employers SET service_id = 3 WHERE position = 'Косметолог';
+UPDATE employers SET service_id = 4 WHERE position = 'Массаж';
+UPDATE employers SET service_id = 5 WHERE position = 'Визажист';
 
 UPDATE services SET service_id = 1 WHERE category = 'Парикмахерский зал';
 UPDATE services SET service_id = 2 WHERE category = 'Ногтевой сервис';
-UPDATE services SET service_id = 3 WHERE category = 'Визажист';
-UPDATE services SET service_id = 4 WHERE category = 'Косметология';
-UPDATE services SET service_id = 5 WHERE category = 'Массаж';
+UPDATE services SET service_id = 3 WHERE category = 'Косметология';
+UPDATE services SET service_id = 4 WHERE category = 'Массаж';
+UPDATE services SET service_id = 5 WHERE category = 'Услуга визажиста';
 
 INSERT INTO services (id, name, category, duration, price, service_id)
-VALUES (6, 'Свадебный макияж', 'Услуга визажиста', '1 час', 2500, 3);]]></console>
+VALUES (6, 'Свадебный макияж', 'Услуга визажиста', '1 час', 3000, 5);
+
+UPDATE appointments SET service_id = 1 WHERE category = '';
+UPDATE appointments SET service_id = 2 WHERE category = '';
+UPDATE appointments SET service_id = 3 WHERE category = '';
+UPDATE appointments SET service_id = 4 WHERE category = '';
+UPDATE appointments SET service_id = 5 WHERE category = '';]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabasePrerequisiteManager">
     <prerequisites />

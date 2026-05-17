@@ -68,7 +68,12 @@
                     <children>
                         <VBox alignment="CENTER" spacing="5.0">
                             <children>
-                                <Circle fill="#F4E2E4" radius="63.0" stroke="#E8C0C5" strokeType="INSIDE" strokeWidth="2.0" />
+                                <!-- <Circle fill="#F4E2E4" radius="63.0" stroke="#E8C0C5" strokeType="INSIDE" strokeWidth="2.0" /> -->
+                                <ImageView fitHeight="126" fitWidth="126" preserveRatio="false">
+                                    <image>
+                                        <Image url="@logo1.png" />
+                                    </image>
+                                </ImageView>
                                 <Label prefHeight="59.0" prefWidth="287.0" text="ЭСТЕТИКА" textFill="#758952">
                                     <font>
                                         <Font name="Serif Bold" size="50.0" />
