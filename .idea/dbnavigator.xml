@@ -80,8 +80,12 @@ ALTER TABLE services ADD COLUMN image_path TEXT;]]></console>
     <connection id="a8c4a086-188e-41df-b484-0668e4babbb3" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.clients" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.employers" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.services" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.sqlite_sequence" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.admins" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.employee_abilities" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.appointments" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
