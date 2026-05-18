@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <HBox prefHeight="831.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.RoleSelectorController">
@@ -68,7 +67,7 @@
                     <children>
                         <VBox alignment="CENTER" spacing="5.0">
                             <children>
-                                <ImageView fitHeight="126" fitWidth="126" preserveRatio="false">
+                                <ImageView fitHeight="130.0" fitWidth="130.0" preserveRatio="false">
                                     <image>
                                         <Image url="@logo1.png" />
                                     </image>
