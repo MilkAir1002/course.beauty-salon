@@ -52,7 +52,7 @@ public class NewClientAppointmentController extends BaseController {
             specialistComboBox.getItems().clear();
 
             if (newVal != null) {
-                priceField.setText(newVal.getPrice() + " руб.");
+                priceField.setText(formatPrice(newVal));
                 specialistComboBox.setItems(database.getSpecialistsByServiceId(newVal.getServiceId()));
                 specialistComboBox.setDisable(specialistComboBox.getItems().isEmpty());
             } else {
@@ -100,5 +100,15 @@ public class NewClientAppointmentController extends BaseController {
     @FXML
     private void back(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/client/client_menu.fxml", "Личный кабинет");
+    }
+
+    private String formatPrice(Service service) {
+        double finalPrice = database.getPriceWithCurrentClientDiscount(service.getPrice());
+
+        if (database.hasCurrentClientDiscount()) {
+            return String.format("%.0f руб. (скидка 10%%)", finalPrice);
+        }
+
+        return String.format("%.0f руб.", finalPrice);
     }
 }

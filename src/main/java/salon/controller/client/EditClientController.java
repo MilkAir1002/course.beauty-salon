@@ -78,6 +78,18 @@ public class EditClientController extends BaseController {
         closeWindow();
     }
 
+    @FXML
+    private void showDiscount() {
+        int successfulAppointments = database.getCurrentClientSuccessfulAppointmentsCount();
+
+        if (database.hasCurrentClientDiscount()) {
+            showInfo("У вас " + successfulAppointments + " успешных записей. Доступна скидка 10% на новые записи.");
+        } else {
+            int remainingAppointments = 5 - successfulAppointments;
+            showInfo("У вас " + successfulAppointments + " успешных записей. До скидки 10% осталось: " + remainingAppointments + ".");
+        }
+    }
+
     private boolean isBlank(String value) {
         return value == null || value.trim().isEmpty();
     }

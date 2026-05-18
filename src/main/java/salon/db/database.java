@@ -346,6 +346,41 @@ public class database {
         return false;
     }
 
+    public static int getCurrentClientSuccessfulAppointmentsCount() {
+        if (curLog == null) {
+            return 0;
+        }
+
+        String query = "SELECT COUNT(*) FROM appointments WHERE client_login = ? " +
+                "AND (LOWER(COALESCE(status, '')) = ? " +
+                "OR (LOWER(COALESCE(status, '')) <> ? AND date(appointment_date) < date('now', 'localtime')))";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            pstmt.setString(1, curLog);
+            pstmt.setString(2, "исполнено");
+            pstmt.setString(3, "отменено");
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    public static boolean hasCurrentClientDiscount() {
+        return getCurrentClientSuccessfulAppointmentsCount() >= 5;
+    }
+
+    public static double getPriceWithCurrentClientDiscount(double price) {
+        return hasCurrentClientDiscount() ? price * 0.9 : price;
+    }
+
     public static ObservableList<Service> getServicesCatalog() {
         ObservableList<Service> services = FXCollections.observableArrayList(); // список для JavaFX
         String query = "SELECT id, name, category, duration, price FROM services ORDER BY category, name"; // берем список услуг
@@ -436,7 +471,7 @@ public class database {
             pstmt.setInt(2, service.getId());
             pstmt.setString(3, service.getName());
             pstmt.setString(4, appointmentDate);
-            pstmt.setDouble(5, service.getPrice());
+            pstmt.setDouble(5, getPriceWithCurrentClientDiscount(service.getPrice()));
             pstmt.setString(6, specialist);
             pstmt.setString(7, "назначена"); // по умолчанию статус новый
 
