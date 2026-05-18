@@ -19,6 +19,13 @@ public class BaseController {
         stage.show();
     }
 
+    protected void changeWindow(Stage stage, String fxmlPath, String title) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+        stage.setTitle(title);
+        stage.setScene(new Scene(root, 1030, 831));
+        stage.show();
+    }
+
     protected void showInfo(String text) {
         showAlert(Alert.AlertType.INFORMATION, "Сообщение", text);
     }

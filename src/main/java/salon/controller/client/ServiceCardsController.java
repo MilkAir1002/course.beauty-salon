@@ -1,154 +1,251 @@
 package salon.controller.client;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 import salon.controller.BaseController;
-import salon.ServiceCard; // Импортируем наш новый расширенный класс
-import salon.db.database; // Предполагаем, что здесь лежит логика подключения к БД
+import salon.db.database;
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ServiceCardsController extends BaseController {
 
     @FXML
-    private VBox servicesContainer;
+    private void initialize() {
+        ensureServiceCardsTable();
+    }
 
     @FXML
-    private void initialize() {
-        loadServiceCards();
+    private void openHairServices(ActionEvent event) {
+        openCategoryWindow(new CategoryTile(1, "Парикмахерский зал"), getStage(event));
     }
 
-    private void loadServiceCards() {
-        List<ServiceCard> cards = new ArrayList<>();
+    @FXML
+    private void openNailsServices(ActionEvent event) {
+        openCategoryWindow(new CategoryTile(2, "Ногтевой сервис"), getStage(event));
+    }
 
-        // Используем URL вашей базы данных SQLite
-        String url = "jdbc:sqlite:salon.db";
-        String query = "SELECT id, name, category, duration, price, description, recommendations, image_path FROM services";
+    @FXML
+    private void openCosmetologyServices(ActionEvent event) {
+        openCategoryWindow(new CategoryTile(3, "Косметология"), getStage(event));
+    }
 
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+    @FXML
+    private void openMassageServices(ActionEvent event) {
+        openCategoryWindow(new CategoryTile(4, "Массаж"), getStage(event));
+    }
 
-            while (rs.next()) {
-                // Создаем объект ServiceCard, который наследует поля от Service
-                cards.add(new ServiceCard(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("category"),
-                        rs.getString("duration"),
-                        rs.getDouble("price"),
-                        rs.getString("description"),
-                        rs.getString("recommendations"),
-                        rs.getString("image_path")
-                ));
+    @FXML
+    private void openMakeupServices(ActionEvent event) {
+        openCategoryWindow(new CategoryTile(5, "Услуги визажиста"), getStage(event));
+    }
+
+    private void openCategoryWindow(CategoryTile tile, Stage mainStage) {
+        TableView<ServiceTableRow> tableView = new TableView<>();
+        tableView.setItems(loadServicesByCategory(tile.serviceId()));
+        tableView.setStyle("-fx-background-color: rgba(255, 255, 255, 0.95); -fx-font-size: 14;");
+
+        TableColumn<ServiceTableRow, String> nameColumn = new TableColumn<>("Название услуги");
+        nameColumn.setCellValueFactory(data -> data.getValue().nameProperty());
+        nameColumn.setPrefWidth(190);
+
+        TableColumn<ServiceTableRow, String> descriptionColumn = new TableColumn<>("Описание");
+        descriptionColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
+        descriptionColumn.setPrefWidth(330);
+
+        TableColumn<ServiceTableRow, String> priceColumn = new TableColumn<>("Цена");
+        priceColumn.setCellValueFactory(data -> data.getValue().priceProperty());
+        priceColumn.setPrefWidth(110);
+
+        TableColumn<ServiceTableRow, String> durationColumn = new TableColumn<>("Длительность");
+        durationColumn.setCellValueFactory(data -> data.getValue().durationProperty());
+        durationColumn.setPrefWidth(130);
+
+        TableColumn<ServiceTableRow, ServiceTableRow> bookColumn = new TableColumn<>("Записаться");
+        bookColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue()));
+        bookColumn.setPrefWidth(130);
+        bookColumn.setCellFactory(column -> new TableCell<>() {
+            private final Button button = new Button("Записаться");
+
+            {
+                button.setStyle("-fx-background-color: #758952; -fx-text-fill: white; "
+                        + "-fx-background-radius: 12; -fx-font-weight: bold;");
+                button.setOnAction(event -> {
+                    try {
+
+                        ServiceTableRow row = getTableView().getItems().get(getIndex());
+                        NewClientAppointmentController.setInitialServiceId(row.getServiceId());
+                        closeCurrentStage(event);
+                        changeWindow(mainStage, "/fxml/client/new_client_appointment.fxml", "Новая запись");
+                    } catch (IOException e) {
+                        showError("Не удалось открыть окно записи.");
+                    }
+                });
             }
-        } catch (SQLException e) {
-            System.err.println("Ошибка при загрузке карточек услуг: " + e.getMessage());
-            e.printStackTrace();
-        }
 
-        // Очищаем контейнер перед добавлением (на всякий случай)
-        servicesContainer.getChildren().clear();
-
-        for (ServiceCard card : cards) {
-            servicesContainer.getChildren().add(createUIFullCard(card));
-        }
-    }
-
-    private VBox createUIFullCard(ServiceCard service) {
-        // Главный контейнер карточки (Горизонтальный)
-        HBox cardRow = new HBox(25);
-        cardRow.setPadding(new Insets(20));
-        cardRow.setStyle("-fx-background-color: #FFFFFF; -fx-background-radius: 15; " +
-                "-fx-border-color: #E8C0C5; -fx-border-radius: 15; " +
-                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);");
-        cardRow.setAlignment(Pos.CENTER_LEFT);
-
-        // --- ЛЕВАЯ КОЛОНКА (Инфо) ---
-        VBox infoCol = new VBox(12);
-        HBox.setHgrow(infoCol, Priority.ALWAYS);
-        infoCol.setMinWidth(400);
-
-        Label descHeader = new Label("ОПИСАНИЕ УСЛУГИ");
-        descHeader.setFont(Font.font("System", FontWeight.BOLD, 12));
-        descHeader.setTextFill(javafx.scene.paint.Color.web("#BDBDBD"));
-
-        Label description = new Label(service.getDescription());
-        description.setWrapText(true);
-        description.setFont(Font.font("System", 14));
-
-        Label details = new Label("Длительность: " + service.getDuration() + " | Цена: " + service.getPrice() + " ₽");
-        details.setFont(Font.font("System", FontWeight.BOLD, 14));
-        details.setTextFill(javafx.scene.paint.Color.web("#758952"));
-
-        VBox recBox = new VBox(5);
-        Label recHeader = new Label("Рекомендации:");
-        recHeader.setFont(Font.font("System", FontWeight.BOLD, 12));
-        Label recText = new Label(service.getRecommendations());
-        recText.setWrapText(true);
-        recText.setStyle("-fx-text-fill: #828282; -fx-font-style: italic;");
-        recBox.getChildren().addAll(recHeader, recText);
-
-        Button btnBook = new Button("ЗАПИСАТЬСЯ");
-        btnBook.setPrefWidth(200);
-        btnBook.setStyle("-fx-background-color: #758952; -fx-text-fill: white; -fx-background-radius: 25; -fx-font-weight: bold;");
-        btnBook.setPadding(new Insets(10));
-        btnBook.setOnAction(event -> {
-            try {
-                changeWindow(event, "/fxml/client/new_client_appointment.fxml", "Новая запись");
-            } catch (IOException e) {
-                e.printStackTrace();
+            @Override
+            protected void updateItem(ServiceTableRow item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty || item == null ? null : button);
+                setAlignment(Pos.CENTER);
             }
         });
 
-        infoCol.getChildren().addAll(descHeader, description, details, recBox, btnBook);
+        tableView.getColumns().addAll(nameColumn, descriptionColumn, priceColumn, durationColumn, bookColumn);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        // --- ПРАВАЯ КОЛОНКА (Название + Картинка) ---
-        VBox visualCol = new VBox(10);
-        visualCol.setAlignment(Pos.TOP_CENTER);
-        visualCol.setMinWidth(220);
+        Label title = new Label(tile.name());
+        title.setTextFill(Color.web("#758952"));
+        title.setFont(Font.font("Serif", FontWeight.BOLD, 34));
 
-        Label nameLabel = new Label(service.getName().toUpperCase());
-        nameLabel.setFont(Font.font("Serif", FontWeight.BOLD, 18));
-        nameLabel.setTextFill(javafx.scene.paint.Color.web("#758952"));
-        nameLabel.setAlignment(Pos.CENTER);
-        nameLabel.setWrapText(true);
+        VBox content = new VBox(20, title, tableView);
+        content.setPadding(new Insets(24));
+        content.setStyle("-fx-background-color:  rgba(255, 255, 255, 0.78);");
+        VBox.setVgrow(tableView, Priority.ALWAYS);
 
-        ImageView imgView = new ImageView();
-        try {
-            // Загрузка картинки. Путь в БД должен быть вида: /images/service1.jpg
-            Image image = new Image(getClass().getResourceAsStream(service.getImagePath()));
-            imgView.setImage(image);
-        } catch (Exception e) {
-            System.err.println("Не удалось загрузить изображение для: " + service.getName());
+        ImageView background = new ImageView(new Image(getClass().getResourceAsStream("/fxml/FON1.png")));
+        background.setFitWidth(920);
+        background.setFitHeight(560);
+        background.setPreserveRatio(false);
+
+        StackPane root = new StackPane(background, content);
+
+        Stage stage = new Stage();
+        stage.setTitle("Услуги: " + tile.name());
+        stage.setScene(new Scene(root, 920, 560));
+        stage.show();
+    }
+
+    private Stage getStage(ActionEvent event) {
+        return (Stage) ((Node) event.getSource()).getScene().getWindow();
+    }
+
+    private void closeCurrentStage(ActionEvent event) {
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
+    }
+
+    private ObservableList<ServiceTableRow> loadServicesByCategory(int serviceId) {
+        ObservableList<ServiceTableRow> services = FXCollections.observableArrayList();
+        String query = """
+                SELECT s.id, s.name, s.duration, s.price, sc.description
+                FROM services s
+                LEFT JOIN service_cards sc ON sc.service_id = s.id
+                WHERE s.service_id = ?
+                ORDER BY s.name
+                """;
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, serviceId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                services.add(new ServiceTableRow(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getString("duration")
+                ));
+            }
+        } catch (SQLException e) {
+            showError("Не удалось загрузить услуги категории.");
+            e.printStackTrace();
         }
-        imgView.setFitWidth(200);
-        imgView.setPreserveRatio(true);
 
-        visualCol.getChildren().addAll(nameLabel, imgView);
+        return services;
+    }
 
-        cardRow.getChildren().addAll(infoCol, visualCol);
+    private void ensureServiceCardsTable() {
+        String query = """
+                CREATE TABLE IF NOT EXISTS service_cards (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    description TEXT,
+                    service_id INTEGER NOT NULL,
+                    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE,
+                    UNIQUE(service_id)
+                )
+                """;
 
-        // Обертка для отступа между карточками
-        VBox wrapper = new VBox(cardRow);
-        wrapper.setPadding(new Insets(0, 0, 20, 0));
-        return wrapper;
+        try (Connection conn = DriverManager.getConnection(database.url);
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(query);
+        } catch (SQLException e) {
+            System.err.println("Не удалось проверить таблицу service_cards: " + e.getMessage());
+        }
     }
 
     @FXML
     private void goBack(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/client/client_menu.fxml", "Личный кабинет");
+    }
+
+    private record CategoryTile(int serviceId, String name) {
+    }
+
+    private static class ServiceTableRow {
+        private final int serviceId;
+        private final SimpleStringProperty name;
+        private final SimpleStringProperty description;
+        private final SimpleStringProperty price;
+        private final SimpleStringProperty duration;
+
+        private ServiceTableRow(int serviceId, String name, String description, double price, String duration) {
+            this.serviceId = serviceId;
+            this.name = new SimpleStringProperty(name);
+            this.description = new SimpleStringProperty(
+                    description == null || description.isBlank() ? "Описание не добавлено" : description
+            );
+            this.price = new SimpleStringProperty(String.format("%.2f руб.", price));
+            this.duration = new SimpleStringProperty(duration);
+        }
+
+        private int getServiceId() {
+            return serviceId;
+        }
+
+        private SimpleStringProperty nameProperty() {
+            return name;
+        }
+
+        private SimpleStringProperty descriptionProperty() {
+            return description;
+        }
+
+        private SimpleStringProperty priceProperty() {
+            return price;
+        }
+
+        private SimpleStringProperty durationProperty() {
+            return duration;
+        }
     }
 }

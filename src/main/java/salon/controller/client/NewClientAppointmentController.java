@@ -14,6 +14,8 @@ import salon.Service;
 import java.io.IOException;
 
 public class NewClientAppointmentController extends BaseController {
+    private static Integer initialServiceId;
+
     @FXML
     private ComboBox<Service> serviceComboBox;
     @FXML
@@ -22,6 +24,10 @@ public class NewClientAppointmentController extends BaseController {
     private DatePicker datePicker;
     @FXML
     private ComboBox<String> specialistComboBox;
+
+    public static void setInitialServiceId(int serviceId) {
+        initialServiceId = serviceId;
+    }
 
     @FXML
     private void initialize() {
@@ -54,6 +60,16 @@ public class NewClientAppointmentController extends BaseController {
                 specialistComboBox.setDisable(true);
             }
         });
+
+        if (initialServiceId != null) {
+            for (Service service : services) {
+                if (service.getId() == initialServiceId) {
+                    serviceComboBox.getSelectionModel().select(service);
+                    break;
+                }
+            }
+            initialServiceId = null;
+        }
     }
 
     @FXML
