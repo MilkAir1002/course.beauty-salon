@@ -16,6 +16,7 @@ import salon.controller.BaseController;
 import salon.db.database;
 import java.io.IOException;
 
+
 public class AdminServicesController extends BaseController {
 
     @FXML private TableView<Service> tableView;
@@ -24,6 +25,7 @@ public class AdminServicesController extends BaseController {
     @FXML private TableColumn<Service, String> categoryColumn;
     @FXML private TableColumn<Service, String> durationColumn;
     @FXML private TableColumn<Service, Double> priceColumn;
+    @FXML private TableColumn<Service, String> descriptionColumn;
 
     private ObservableList<Service> servicesList = FXCollections.observableArrayList();
 
@@ -34,6 +36,7 @@ public class AdminServicesController extends BaseController {
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
 
         // Форматируем колонку цены
         priceColumn.setCellFactory(column -> new TableCell<Service, Double>() {
@@ -132,6 +135,7 @@ public class AdminServicesController extends BaseController {
         ComboBox<String> categoryCombo = (ComboBox<String>) root.lookup("#categoryCombo");
         TextField durationField = (TextField) root.lookup("#durationField");
         TextField priceField = (TextField) root.lookup("#priceField");
+        TextArea descriptionArea = (TextArea) root.lookup("#descriptionField");
         Button saveButton = (Button) root.lookup("#saveButton");
 
         if (nameField == null || categoryCombo == null || durationField == null ||
@@ -145,7 +149,7 @@ public class AdminServicesController extends BaseController {
                 "Ногтевой сервис",
                 "Косметология",
                 "Массаж",
-                "Услуга визажиста"
+                "Услуги визажиста"
         );
 
         boolean isEdit = existingService != null;
@@ -155,6 +159,9 @@ public class AdminServicesController extends BaseController {
             categoryCombo.setValue(existingService.getCategory());
             durationField.setText(existingService.getDuration());
             priceField.setText(String.valueOf(existingService.getPrice()));
+            if (descriptionArea != null && existingService.getDescription() != null) {
+                descriptionArea.setText(existingService.getDescription());
+            }
             saveButton.setText("Сохранить");
         }
 
@@ -197,20 +204,24 @@ public class AdminServicesController extends BaseController {
                 return;
             }
 
+            String descriptionText = (descriptionArea != null) ? descriptionArea.getText().trim() : "";
+
             if (isEdit) {
                 result[0] = new Service(
                         existingService.getId(),
                         nameField.getText().trim(),
                         categoryCombo.getValue(),
                         durationField.getText().trim(),
-                        price
+                        price,
+                        descriptionText
                 );
             } else {
                 result[0] = new Service(
                         nameField.getText().trim(),
                         categoryCombo.getValue(),
                         durationField.getText().trim(),
-                        price
+                        price,
+                        descriptionText
                 );
             }
             dialog.close();

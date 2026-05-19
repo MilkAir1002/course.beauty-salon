@@ -383,7 +383,7 @@ public class database {
 
     public static ObservableList<Service> getServicesCatalog() {
         ObservableList<Service> services = FXCollections.observableArrayList(); // список для JavaFX
-        String query = "SELECT id, name, category, duration, price FROM services ORDER BY category, name"; // берем список услуг
+        String query = "SELECT id, name, category, duration, price, description FROM services, description ORDER BY category, name"; // берем список услуг
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query);
@@ -396,7 +396,8 @@ public class database {
                         rs.getString("name"),
                         rs.getString("category"),
                         rs.getString("duration"),
-                        rs.getDouble("price")
+                        rs.getDouble("price"),
+                        rs.getString("description")
                 ));
             }
         } catch (SQLException e) {
@@ -409,7 +410,7 @@ public class database {
     public static ObservableList<Service> getServicesWithEmployeeAbilities() {
         ObservableList<Service> services = FXCollections.observableArrayList();
 
-        String query = "SELECT DISTINCT id, name, category, duration, price, service_id FROM services ORDER BY category, name";
+        String query = "SELECT DISTINCT id, name, category, duration, price, service_id, description FROM services ORDER BY category, name";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query);
@@ -421,7 +422,8 @@ public class database {
                         rs.getString("name"),
                         rs.getString("category"),
                         rs.getString("duration"),
-                        rs.getDouble("price")
+                        rs.getDouble("price"),
+                        rs.getString("description")
                 );
                 service.setServiceId(rs.getInt("service_id"));
                 services.add(service);
@@ -437,7 +439,7 @@ public class database {
     public static ObservableList<String> getSpecialistsByServiceId(int serviceId) {
         ObservableList<String> specialists = FXCollections.observableArrayList();
 
-        String query = "SELECT full_name FROM employers WHERE service_id = ? ORDER BY full_name";
+        String query = "SELECT full_name FROM employees WHERE service_id = ? ORDER BY full_name";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -541,9 +543,9 @@ public class database {
     }
 
     // Получить всех сотрудников из БД
-    public static ObservableList<Employer> getAllEmployers() {
+    public static ObservableList<Employer> getAllEmployees() {
         ObservableList<Employer> employers = FXCollections.observableArrayList();
-        String query = "SELECT id, full_name, birth_date, phone, position, service_id FROM employers ORDER BY id";
+        String query = "SELECT id, full_name, birth_date, phone, position, service_id FROM employees ORDER BY id";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              Statement stmt = conn.createStatement();
@@ -587,8 +589,8 @@ public class database {
     }
 
     // Добавить нового сотрудника
-    public static boolean addEmployer(Employer employer) {
-        String query = "INSERT INTO employers (full_name, birth_date, phone, position, service_id) VALUES (?, ?, ?, ?, ?)";
+    public static boolean addEmployee(Employer employer) {
+        String query = "INSERT INTO employees (full_name, birth_date, phone, position, service_id) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -616,8 +618,8 @@ public class database {
     }
 
     // Обновить данные сотрудника
-    public static boolean updateEmployer(Employer employer) {
-        String query = "UPDATE employers SET full_name = ?, birth_date = ?, phone = ?, position = ?, service_id = ? WHERE id = ?";
+    public static boolean updateEmployee(Employer employer) {
+        String query = "UPDATE employees SET full_name = ?, birth_date = ?, phone = ?, position = ?, service_id = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -638,8 +640,8 @@ public class database {
     }
 
     // Удалить сотрудника
-    public static boolean deleteEmployer(int employerId) {
-        String query = "DELETE FROM employers WHERE id = ?";
+    public static boolean deleteEmployee(int employerId) {
+        String query = "DELETE FROM employees WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -754,7 +756,7 @@ public class database {
     // Получить все услуги из БД
     public static ObservableList<Service> getAllServices() {
         ObservableList<Service> services = FXCollections.observableArrayList();
-        String query = "SELECT id, name, category, duration, price, service_id FROM services ORDER BY id";
+        String query = "SELECT id, name, category, duration, price, service_id, description FROM services ORDER BY id";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              Statement stmt = conn.createStatement();
@@ -766,7 +768,8 @@ public class database {
                         rs.getString("name"),
                         rs.getString("category"),
                         rs.getString("duration"),
-                        rs.getDouble("price")
+                        rs.getDouble("price"),
+                        rs.getString("description")
                 );
                 service.setServiceId(rs.getInt("service_id"));
                 services.add(service);
@@ -779,7 +782,7 @@ public class database {
 
     // Добавить новую услугу
     public static boolean addService(Service service) {
-        String query = "INSERT INTO services (name, category, duration, price, service_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO services (name, category, duration, price, service_id, description) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -789,6 +792,7 @@ public class database {
             pstmt.setString(3, service.getDuration());
             pstmt.setDouble(4, service.getPrice());
             pstmt.setInt(5, service.getServiceId());
+            pstmt.setString(6, service.getDescription());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -807,7 +811,7 @@ public class database {
 
     // Обновить данные услуги
     public static boolean updateService(Service service) {
-        String query = "UPDATE services SET name = ?, category = ?, duration = ?, price = ?, service_id = ? WHERE id = ?";
+        String query = "UPDATE services SET name = ?, category = ?, duration = ?, price = ?, service_id = ?, description = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -817,7 +821,8 @@ public class database {
             pstmt.setString(3, service.getDuration());
             pstmt.setDouble(4, service.getPrice());
             pstmt.setInt(5, service.getServiceId());
-            pstmt.setInt(6, service.getId());
+            pstmt.setString(6, service.getDescription());
+            pstmt.setInt(7, service.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {

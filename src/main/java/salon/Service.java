@@ -7,25 +7,33 @@ public class Service {
     private String duration;
     private double price;
     private int serviceId;
+    private String description;
 
     // Конструктор для создания новой услуги
-    public Service(String name, String category, String duration, double price) {
-        this.id = -1;
+    public Service(String name, String category, String duration, double price, String description) {
+        this.id = -1; // -1 означает, что ID ещё не присвоен базой
         this.name = name;
         this.category = category;
         this.duration = duration;
         this.price = price;
         this.serviceId = getServiceIdByCategory(category);
+        this.description = description;
+    }
+
+    // Конструктор для создания без description (вызывает главный)
+    public Service(String name, String category, String duration, double price) {
+        this(name, category, duration, price, "");
     }
 
     // Конструктор для редактирования услуги (сохраняется старый id)
-    public Service(int id, String name, String category, String duration, double price) {
+    public Service(int id, String name, String category, String duration, double price, String description) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.duration = duration;
         this.price = price;
         this.serviceId = getServiceIdByCategory(category);
+        this.description = description;
     }
 
     // Метод для определения service_id по категории
@@ -53,6 +61,7 @@ public class Service {
     public String getDuration() { return duration; }
     public double getPrice() { return price; }
     public int getServiceId() { return serviceId; }
+    public String getDescription() { return description; }
 
     // Сеттеры
     public void setId(int id) { this.id = id; }
@@ -65,6 +74,7 @@ public class Service {
     public void setDuration(String duration) { this.duration = duration; }
     public void setPrice(double price) { this.price = price; }
     public void setServiceId(int serviceId) { this.serviceId = serviceId; }
+    public void setDescription(String description) { this.description = description; }
 
     @Override
     public boolean equals(Object obj) {
