@@ -181,12 +181,11 @@ public class ServiceCardsController extends BaseController {
     private ObservableList<ServiceTableRow> loadServicesByCategory(int serviceId) {
         ObservableList<ServiceTableRow> services = FXCollections.observableArrayList();
         String query = """
-                SELECT s.id, s.name, s.duration, s.price, sc.description
-                FROM services s
-                LEFT JOIN service_cards sc ON sc.service_id = s.id
-                WHERE s.service_id = ?
-                ORDER BY s.name
-                """;
+                SELECT id, name, duration, price, description
+            FROM services
+            WHERE service_id = ?
+            ORDER BY name
+            """;
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement stmt = conn.prepareStatement(query)) {

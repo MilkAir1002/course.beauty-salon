@@ -53,7 +53,7 @@ public class AdminEmployersController extends BaseController {
     // Загрузка сотрудников из базы данных
     private void loadEmployersFromDatabase() {
         employersList.clear();
-        employersList.addAll(database.getAllEmployers());
+        employersList.addAll(database.getAllEmployees());
         tableView.refresh();
     }
 
@@ -64,7 +64,7 @@ public class AdminEmployersController extends BaseController {
         Employer result = showEmployerDialog(null); // Открытие пустой формы
         if (result != null) { // Если пользователь нажал "Сохранить"
             // Сохраняем в базу данных
-            if (database.addEmployer(result)) {
+            if (database.addEmployee(result)) {
                 loadEmployersFromDatabase(); // Перезагружаем таблицу
                 showInfoAlert("Сотрудник успешно добавлен");
             } else {
@@ -85,7 +85,7 @@ public class AdminEmployersController extends BaseController {
         Employer result = showEmployerDialog(selected); // Открытие заполненной формы
         if (result != null) { // Если пользователь нажал "Сохранить"
             // Обновляем в базе данных
-            if (database.updateEmployer(result)) {
+            if (database.updateEmployee(result)) {
                 loadEmployersFromDatabase(); // Перезагружаем таблицу
                 showInfoAlert("Сотрудник успешно обновлен");
             } else {
@@ -110,7 +110,7 @@ public class AdminEmployersController extends BaseController {
 
         if (confirmation.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) { // Если нажата "OK"
             // Удаляем из базы данных
-            if (database.deleteEmployer(selected.getId())) {
+            if (database.deleteEmployee(selected.getId())) {
                 loadEmployersFromDatabase(); // Перезагружаем таблицу
                 showInfoAlert("Сотрудник успешно удален");
             } else {
