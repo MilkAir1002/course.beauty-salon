@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import salon.controller.BaseController;
 import salon.db.database;
@@ -80,6 +81,33 @@ public class ServiceCardsController extends BaseController {
         descriptionColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
         descriptionColumn.setPrefWidth(330);
 
+        // --- ОБНОВЛЕННАЯ ФАБРИКА ДЛЯ АВТОПЕРЕНОСА ТЕКСТА И ВЫСОТЫ СТРОК ---
+        descriptionColumn.setCellFactory(tc -> new TableCell<>() {
+            private final Text textNode = new Text();
+
+            {
+                // Привязываем ширину переноса текста к ширине колонки с небольшим отступом
+                textNode.wrappingWidthProperty().bind(widthProperty().subtract(15));
+                // Наследуем стили шрифта, чтобы текст выглядел аккуратно
+                textNode.styleProperty().bind(styleProperty());
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                    setText(null);
+                } else {
+                    textNode.setText(item);
+                    setGraphic(textNode);
+                    // Заставляем ячейку автоматически рассчитывать высоту под текст
+                    setPrefHeight(javafx.scene.control.Control.USE_COMPUTED_SIZE);
+                }
+            }
+        });
+        // ------------------------------------------------------------------
+
         TableColumn<ServiceTableRow, String> priceColumn = new TableColumn<>("Цена");
         priceColumn.setCellValueFactory(data -> data.getValue().priceProperty());
         priceColumn.setPrefWidth(110);
@@ -99,7 +127,6 @@ public class ServiceCardsController extends BaseController {
                         + "-fx-background-radius: 12; -fx-font-weight: bold;");
                 button.setOnAction(event -> {
                     try {
-
                         ServiceTableRow row = getTableView().getItems().get(getIndex());
                         NewClientAppointmentController.setInitialServiceId(row.getServiceId());
                         closeCurrentStage(event);

@@ -11,16 +11,19 @@
   </component>
   <component name="DBNavigator.Project.DatabaseAssistantManager">
     <assistants>
+      <assistant-state connection-id="40835a2d-7267-4dba-99b5-3f76f281b813" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+        <tools />
+      </assistant-state>
       <assistant-state connection-id="40835a2d-7267-4dba-99b5-3f76f281b813" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
         <tools />
       </assistant-state>
-      <assistant-state connection-id="40835a2d-7267-4dba-99b5-3f76f281b813" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+      <assistant-state connection-id="6084f2b9-4148-4e81-9a5e-6621d6f4b73d" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
       <assistant-state connection-id="6084f2b9-4148-4e81-9a5e-6621d6f4b73d" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
         <tools />
       </assistant-state>
-      <assistant-state connection-id="6084f2b9-4148-4e81-9a5e-6621d6f4b73d" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+      <assistant-state connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
       <assistant-state connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="517B19548FEF42B7803EECAE7C1DD87B" availability="AVAILABLE" acknowledgement="ENGAGED" selected="true">
@@ -32,13 +35,10 @@
         </chats>
         <tools />
       </assistant-state>
-      <assistant-state connection-id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
+      <assistant-state connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
       <assistant-state connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" assistant-type="PUBLIC" default-profile-name="" selected-chat-id="" availability="AVAILABLE" acknowledgement="NONE" selected="true">
-        <tools />
-      </assistant-state>
-      <assistant-state connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" assistant-type="SELECT_AI" default-profile-name="" selected-chat-id="" availability="UNAVAILABLE" acknowledgement="NONE">
         <tools />
       </assistant-state>
     </assistants>
@@ -54,24 +54,27 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="a8c4a086-188e-41df-b484-0668e4babbb3">
-      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[DELETE FROM clients;
-
-INSERT INTO clients (first_name, last_name, patronymic, phone, email, login, gender, password)
-VALUES
-('Иван', 'Иванов', 'Иванович', '+79991234567', 'ivan@mail.ru', 'ivan_dev', 'M', 'pass123'),
-('Мария', 'Петрова', 'Сергеевна', '89005554433', 'masha@yandex.ru', 'mary_star', 'F', 'qwerty777'),
-('Алексей', 'Сидоров', NULL, '+79110001122', 'alex@gmail.com', 'admin', 'M', 'admin123');
-
-ALTER TABLE services ADD COLUMN description TEXT;
-ALTER TABLE services ADD COLUMN recommendations TEXT;
-ALTER TABLE services ADD COLUMN image_path TEXT;]]></console>
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[REPLACE INTO service_cards (service_id, description) VALUES
+(1, 'Гигиеническое мытье головы, классическая или модельная стрижка по современным техникам геометрии, легкая салонная укладка по форме.'),
+(2, 'Классические и трендовые стрижки (включая фейд и андеркат). Мытье головы, профессиональный стайлинг и моделирование формы.'),
+(3, 'Безопасный комбинированный или аппаратный маникюр с обязательной стерилизацией инструментов. Выравнивание базой и стойкое покрытие гель-лаком.'),
+(4, 'Глубокое очищение кожи (ультразвуковое/механическое), удаление комедонов, сужение пор, нанесение успокаивающей маски по типу кожи.'),
+(5, 'Классический массаж спины, направленный на снятие зажимов, проработку триггерных точек, улучшение тонуса мышц и общего лимфотока.'),
+(8, 'Специализированный массаж стоп и голеней, активизирующий рефлекторные зоны, снимающий синдром тяжелых ног и восстанавливающий легкость.'),
+(6, 'Профессиональный свадебный макияж повышенной стойкости (Face-art) с использованием премиальной косметики, адаптированный под фото- и видеосъемку.'),
+(7, 'Изысканный вечерний или коктейльный макияж, моделирование контуров лица, акцент на глаза или губы для любого торжественного мероприятия.');]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/appointments" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/services" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/employers" />
+      <object connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" object-ref="schemas/main/tables/admins" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabasePrerequisiteManager">
     <prerequisites />
@@ -85,6 +88,7 @@ ALTER TABLE services ADD COLUMN image_path TEXT;]]></console>
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.services" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.sqlite_sequence" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.admins" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.service_cards" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.employee_abilities" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.appointments" active-filter-id="EMPTY_FILTER" />
   </component>
@@ -590,7 +594,7 @@ ALTER TABLE services ADD COLUMN image_path TEXT;]]></console>
       <transactions>
         <uncommitted-changes>
           <on-project-close value="ASK" />
-          <on-disconnect value="ASK" />
+          <on-disconnect value="COMMIT" />
           <on-autocommit-toggle value="ASK" />
         </uncommitted-changes>
         <multiple-uncommitted-changes>
