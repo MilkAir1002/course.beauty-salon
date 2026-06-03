@@ -382,26 +382,29 @@ public class database {
     }
 
     public static ObservableList<Service> getServicesCatalog() {
-        ObservableList<Service> services = FXCollections.observableArrayList(); // список для JavaFX
-        String query = "SELECT id, name, category, duration, price, description FROM services, description ORDER BY category, name"; // берем список услуг
+        ObservableList<Service> services = FXCollections.observableArrayList();
+        String query = "SELECT id, name, category, duration, price, service_id, description FROM services ORDER BY category, name";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                // добавляем каждую услугу в список
-                services.add(new Service(
+                // Добавляем каждую услугу в список
+                Service service = new Service(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("category"),
                         rs.getString("duration"),
                         rs.getDouble("price"),
                         rs.getString("description")
-                ));
+                );
+                service.setServiceId(rs.getInt("service_id"));
+                services.add(service);
             }
         } catch (SQLException e) {
-            services.clear(); // если ошибка, чистим список
+            e.printStackTrace();
+            services.clear(); // Если ошибка чистим каталог
         }
 
         return services;
@@ -545,7 +548,7 @@ public class database {
     // Получить всех сотрудников из БД
     public static ObservableList<Employer> getAllEmployees() {
         ObservableList<Employer> employers = FXCollections.observableArrayList();
-        String query = "SELECT id, full_name, birth_date, phone, position, service_id FROM employees ORDER BY id";
+        String query = "SELECT id, full_name, birth_date, phone, details, position, service_id FROM employees ORDER BY id";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              Statement stmt = conn.createStatement();
@@ -577,6 +580,7 @@ public class database {
                         rs.getString("full_name"),
                         birthDate,
                         rs.getString("phone"),
+                        rs.getString("details"),
                         rs.getString("position")
                 );
                 employer.setServiceId(rs.getInt("service_id"));
@@ -590,7 +594,7 @@ public class database {
 
     // Добавить нового сотрудника
     public static boolean addEmployee(Employer employer) {
-        String query = "INSERT INTO employees (full_name, birth_date, phone, position, service_id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO employees (full_name, birth_date, phone, details, position, service_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -599,8 +603,9 @@ public class database {
             // Сохраняем дату в формате YYYY-MM-DD
             pstmt.setString(2, employer.getBirthDate().toString()); // Это даст формат YYYY-MM-DD
             pstmt.setString(3, employer.getPhone());
-            pstmt.setString(4, employer.getPosition());
-            pstmt.setInt(5, employer.getServiceId());
+            pstmt.setString(4, employer.getDetails());
+            pstmt.setString(5, employer.getPosition());
+            pstmt.setInt(6, employer.getServiceId());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -619,7 +624,7 @@ public class database {
 
     // Обновить данные сотрудника
     public static boolean updateEmployee(Employer employer) {
-        String query = "UPDATE employees SET full_name = ?, birth_date = ?, phone = ?, position = ?, service_id = ? WHERE id = ?";
+        String query = "UPDATE employees SET full_name = ?, birth_date = ?, phone = ?, details = ?, position = ?, service_id = ? WHERE id = ?";
 
         try (Connection conn = DriverManager.getConnection(database.url);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -628,9 +633,10 @@ public class database {
             // Сохраняем дату в формате YYYY-MM-DD
             pstmt.setString(2, employer.getBirthDate().toString());
             pstmt.setString(3, employer.getPhone());
-            pstmt.setString(4, employer.getPosition());
-            pstmt.setInt(5, employer.getServiceId());
-            pstmt.setInt(6, employer.getId());
+            pstmt.setString(4, employer.getDetails());
+            pstmt.setString(5, employer.getPosition());
+            pstmt.setInt(6, employer.getServiceId());
+            pstmt.setInt(7, employer.getId());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {

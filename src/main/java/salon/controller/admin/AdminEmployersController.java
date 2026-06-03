@@ -32,6 +32,8 @@ public class AdminEmployersController extends BaseController {
     private TableColumn<Employer, String> positionColumn;
     @FXML
     private TableColumn<Employer, String> phoneColumn;
+    @FXML
+    private TableColumn<Employer, String> detailsColumn;
 
     // Список сотрудников. Таблица обновляется сама
     private ObservableList<Employer> employersList = FXCollections.observableArrayList();
@@ -44,6 +46,7 @@ public class AdminEmployersController extends BaseController {
         birthDateColumn.setCellValueFactory(new PropertyValueFactory<>("formattedBirthDate"));
         positionColumn.setCellValueFactory(new PropertyValueFactory<>("position"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        detailsColumn.setCellValueFactory(new PropertyValueFactory<>("details"));
         // Связываем таблицу со списком
         tableView.setItems(employersList);
         // Загружаем данные из базы данных
@@ -129,7 +132,9 @@ public class AdminEmployersController extends BaseController {
         TextField fullNameField = (TextField) root.lookup("#fullName");
         DatePicker birthDatePicker = (DatePicker) root.lookup("#birthDate");
         TextField phoneField = (TextField) root.lookup("#phone");
+        TextArea detailsField = (TextArea) root.lookup("#details");
         ComboBox<String> postCombo = (ComboBox<String>) root.lookup("#post");
+
         Button saveButton = (Button) root.lookup("#saveAppointmentButton");
 
         // Настраиваем выпадающий список
@@ -141,6 +146,7 @@ public class AdminEmployersController extends BaseController {
             fullNameField.setText(existingEmployer.getFullName());
             birthDatePicker.setValue(existingEmployer.getBirthDate());
             phoneField.setText(existingEmployer.getPhone());
+            detailsField.setText(existingEmployer.getDetails());
             postCombo.setValue(existingEmployer.getPosition());
             saveButton.setText("Сохранить");
         }
@@ -174,20 +180,29 @@ public class AdminEmployersController extends BaseController {
                 return;
             }
 
+            String phone = phoneField.getText();
+            if (!validatePhone(phone)) {
+                return;
+            }
+
+            String formattedPhone = formatPhoneForSave(phone);
+
             // Создаем сотрудника
             if (isEdit) { // Если редактируем
                 result[0] = new Employer(
                         existingEmployer.getId(), // берем id существующего сотрудника
                         fullNameField.getText(),
                         birthDatePicker.getValue(),
-                        phoneField.getText(),
+                        formattedPhone,
+                        detailsField.getText(),
                         postCombo.getValue()
                 );
             } else {
                 result[0] = new Employer(
                         fullNameField.getText(),
                         birthDatePicker.getValue(),
-                        phoneField.getText(),
+                        formattedPhone,
+                        detailsField.getText(),
                         postCombo.getValue()
                 );
             }
@@ -197,6 +212,44 @@ public class AdminEmployersController extends BaseController {
 
         dialog.showAndWait(); // Показать окно и ждать пока пользователь не закончит работу
         return result[0]; // возвращаем сотрудника
+    }
+
+    private boolean validatePhone(String phone) {
+        // Удаляем все нецифровые символы
+        String digits = phone.replaceAll("\\D", "");
+
+        // Проверяем, что 11 цифр и начинается с 7 или 8
+        if (digits.length() != 11) {
+            showAlert("Телефон должен содержать 11 цифр");
+            return false;
+        }
+
+        if (!digits.startsWith("7") && !digits.startsWith("8")) {
+            showAlert("Телефон должен начинаться с 7 или 8");
+            return false;
+        }
+
+        return true;
+    }
+
+    // Метод для форматирования телефона в вид +7 (***) ***-**-**
+    private String formatPhoneForSave(String phone) {
+        // Удаляем все нецифровые символы
+        String digits = phone.replaceAll("\\D", "");
+
+        // Если первая цифра 8, заменяем на 7
+        if (digits.startsWith("8")) {
+            digits = "7" + digits.substring(1);
+        }
+
+        // Форматируем в +7 (***) ***-**-**
+        return String.format("+%s (%s) %s-%s-%s",
+                digits.charAt(0),
+                digits.substring(1, 4),
+                digits.substring(4, 7),
+                digits.substring(7, 9),
+                digits.substring(9, 11)
+        );
     }
 
     // Навигация
@@ -218,5 +271,10 @@ public class AdminEmployersController extends BaseController {
     @FXML
     private void services(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/admin/admin_services.fxml", "Панель администратора: услуги");
+    }
+
+    @FXML
+    private void statistics(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/admin/admin_statistics.fxml", "Панель администратора: статистика");
     }
 }

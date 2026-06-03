@@ -5,11 +5,12 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="331.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="455.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" prefHeight="64.0" prefWidth="345.0" text="Добавление/редактирование сотрудника" textAlignment="CENTER" textFill="#758952" wrapText="true">
          <font>
@@ -22,8 +23,9 @@
       <VBox maxWidth="420.0" spacing="14.0">
          <children>
             <TextField fx:id="fullName" promptText="ФИО" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
-            <DatePicker fx:id="birthDate" maxWidth="1.7976931348623157E308" promptText="Дата" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+            <DatePicker fx:id="birthDate" maxWidth="1.7976931348623157E308" promptText="Дата рождения" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
             <TextField fx:id="phone" promptText="Телефон" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
+            <TextArea fx:id="details" prefHeight="108.0" prefWidth="420.0" promptText="Характеристика сотрудника" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #F4E2E4;" wrapText="true" />
             <ComboBox fx:id="post" maxWidth="1.7976931348623157E308" promptText="Должность" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10;" />
          </children>
          <VBox.margin>

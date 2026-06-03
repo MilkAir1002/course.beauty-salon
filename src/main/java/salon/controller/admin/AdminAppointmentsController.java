@@ -213,8 +213,17 @@ public class AdminAppointmentsController extends BaseController {
             specialistCombo.getSelectionModel().clearSelection();
 
             if (newVal != null) {
-                // Устанавливаем цену
-                priceField.setText(String.format("%.2f ₽", newVal.getPrice()));
+                // Получаем выбранного клиента
+                String selectedClient = clientCombo.getValue();
+
+                // Рассчитываем цену с учетом скидки клиента
+                double finalPrice = newVal.getPrice();
+                if (selectedClient != null && hasClientDiscount(selectedClient)) {
+                    finalPrice = newVal.getPrice() * 0.9;
+                    priceField.setText(String.format("%.2f ₽ (со скидкой 10%%)", finalPrice));
+                } else {
+                    priceField.setText(String.format("%.2f ₽", finalPrice));
+                }
 
                 ObservableList<String> specialists = database.getSpecialistsByServiceId(newVal.getServiceId());
                 specialistCombo.setItems(specialists);
@@ -224,6 +233,21 @@ public class AdminAppointmentsController extends BaseController {
                 specialistCombo.setDisable(true);
             }
         });
+
+        // Слушатель выбора клиента: пересчитываем цену со скидкой
+        clientCombo.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            Service selectedService = serviceCombo.getValue();
+            if (selectedService != null) {
+                double finalPrice = selectedService.getPrice();
+                if (newVal != null && hasClientDiscount(newVal)) {
+                    finalPrice = selectedService.getPrice() * 0.9;
+                    priceField.setText(String.format("%.2f ₽ (со скидкой 10%%)", finalPrice));
+                } else {
+                    priceField.setText(String.format("%.2f ₽", finalPrice));
+                }
+            }
+        });
+
         boolean isEdit = existingAppointment != null; // Определяем режим (Добавление или редактирование)
 
         // Если редактируем - заполняем поля
@@ -248,11 +272,15 @@ public class AdminAppointmentsController extends BaseController {
             }
 
             // Устанавливаем мастера (после того как загрузится список мастеров)
-            // Используем небольшой таймер, чтобы список мастеров успел загрузиться
             javafx.animation.PauseTransition pause = new javafx.animation.PauseTransition(javafx.util.Duration.millis(100));
             pause.setOnFinished(e -> {
                 specialistCombo.setValue(existingAppointment.getSpecialist());
-                priceField.setText(String.format("%.2f ₽", existingAppointment.getPrice()));
+                double finalPrice = existingAppointment.getPrice();
+                if (hasClientDiscount(existingAppointment.getClientLogin())) {
+                    priceField.setText(String.format("%.2f ₽ (со скидкой 10%%)", finalPrice));
+                } else {
+                    priceField.setText(String.format("%.2f ₽", finalPrice));
+                }
             });
             pause.play();
 
@@ -263,9 +291,9 @@ public class AdminAppointmentsController extends BaseController {
 
         // Создаем окно
         Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL); // Определяем тип модальности. Блокирует все окна приложения
+        dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.setTitle(isEdit ? "Редактирование записи" : "Добавление записи");
-        dialog.setScene(new Scene(root)); // Создаем и помещаем в сцену VBOX с формой (root)
+        dialog.setScene(new Scene(root));
         dialog.setResizable(false);
 
         // Массив для хранения результата
@@ -294,36 +322,59 @@ public class AdminAppointmentsController extends BaseController {
             // Форматируем дату в строку YYYY-MM-DD
             String formattedDate = appointmentDatePicker.getValue().toString();
             Service selectedService = serviceCombo.getValue();
+            String selectedClient = clientCombo.getValue();
+
+            // Рассчитываем цену со скидкой
+            double finalPrice = selectedService.getPrice();
+            if (hasClientDiscount(selectedClient)) {
+                finalPrice = selectedService.getPrice() * 0.9;
+            }
 
             // Создаем запись
-            if (isEdit) { // Если редактируем
+            if (isEdit) {
                 result[0] = new Appointment(
-                        existingAppointment.getId(), // берем id существующей записи
-                        clientCombo.getValue(),
+                        existingAppointment.getId(),
+                        selectedClient,
                         selectedService.getServiceId(),
                         selectedService.getName(),
                         formattedDate,
                         specialistCombo.getValue(),
-                        selectedService.getPrice(),
+                        finalPrice,
                         "назначена"
                 );
-            } else { // Если добавляем новую
+            } else {
                 result[0] = new Appointment(
-                        clientCombo.getValue(),
+                        selectedClient,
                         selectedService.getServiceId(),
                         selectedService.getName(),
                         formattedDate,
                         specialistCombo.getValue(),
-                        selectedService.getPrice(),
+                        finalPrice,
                         "назначена"
                 );
             }
 
-            dialog.close(); // Закрытие окна
+            dialog.close();
         });
 
-        dialog.showAndWait(); // Показать окно и ждать пока пользователь не закончит работу
-        return result[0]; // возвращаем запись
+        dialog.showAndWait();
+        return result[0];
+    }
+
+    // Вспомогательный метод для проверки скидки у клиента
+    private boolean hasClientDiscount(String clientLogin) {
+        if (clientLogin == null) return false;
+
+        // Сохраняем текущий логин, чтобы временно подменить
+        String originalLogin = database.curLog;
+        database.curLog = clientLogin;
+
+        boolean hasDiscount = database.hasCurrentClientDiscount();
+
+        // Восстанавливаем оригинальный логин
+        database.curLog = originalLogin;
+
+        return hasDiscount;
     }
 
     // Навигация
@@ -345,5 +396,10 @@ public class AdminAppointmentsController extends BaseController {
     @FXML
     private void services(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/admin/admin_services.fxml", "Панель администратора: услуги");
+    }
+
+    @FXML
+    private void statistics(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/admin/admin_statistics.fxml", "Панель администратора: статистика");
     }
 }

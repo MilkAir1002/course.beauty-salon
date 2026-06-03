@@ -206,6 +206,13 @@ public class AdminCustomersController extends BaseController {
                 genderForDb = "F";
             }
 
+            String phone = phoneField.getText();
+            if (!validatePhone(phone)) {
+                return;
+            }
+
+            String formattedPhone = formatPhoneForSave(phone);
+
             // Создаем клиента
             if (isEdit) {
                 result[0] = new Customer(
@@ -213,7 +220,7 @@ public class AdminCustomersController extends BaseController {
                         lastNameField.getText().trim(),
                         firstNameField.getText().trim(),
                         patronymicField.getText().trim(),
-                        phoneField.getText().trim(),
+                        formattedPhone,
                         emailField.getText().trim(),
                         loginField.getText().trim(),
                         genderForDb,  // Отправляем "M" или "F" в базу данных
@@ -224,7 +231,7 @@ public class AdminCustomersController extends BaseController {
                         lastNameField.getText().trim(),
                         firstNameField.getText().trim(),
                         patronymicField.getText().trim(),
-                        phoneField.getText().trim(),
+                        formattedPhone,
                         emailField.getText().trim(),
                         loginField.getText().trim(),
                         genderForDb,  // Отправляем "M" или "F" в базу данных
@@ -236,6 +243,43 @@ public class AdminCustomersController extends BaseController {
 
         dialog.showAndWait();
         return result[0];
+    }
+    private boolean validatePhone(String phone) {
+        // Удаляем все нецифровые символы
+        String digits = phone.replaceAll("\\D", "");
+
+        // Проверяем, что 11 цифр и начинается с 7 или 8
+        if (digits.length() != 11) {
+            showAlert("Телефон должен содержать 11 цифр");
+            return false;
+        }
+
+        if (!digits.startsWith("7") && !digits.startsWith("8")) {
+            showAlert("Телефон должен начинаться с 7 или 8");
+            return false;
+        }
+
+        return true;
+    }
+
+    // Метод для форматирования телефона в вид +7 (***) ***-**-**
+    private String formatPhoneForSave(String phone) {
+        // Удаляем все нецифровые символы
+        String digits = phone.replaceAll("\\D", "");
+
+        // Если первая цифра 8, заменяем на 7
+        if (digits.startsWith("8")) {
+            digits = "7" + digits.substring(1);
+        }
+
+        // Форматируем в +7 (***) ***-**-**
+        return String.format("+%s (%s) %s-%s-%s",
+                digits.charAt(0),
+                digits.substring(1, 4),
+                digits.substring(4, 7),
+                digits.substring(7, 9),
+                digits.substring(9, 11)
+        );
     }
 
     @FXML
@@ -256,5 +300,10 @@ public class AdminCustomersController extends BaseController {
     @FXML
     private void services(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/admin/admin_services.fxml", "Панель администратора: услуги");
+    }
+
+    @FXML
+    private void statistics(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/admin/admin_statistics.fxml", "Панель администратора: статистика");
     }
 }
