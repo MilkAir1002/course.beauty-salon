@@ -81,13 +81,6 @@ public class AdminStatisticsController extends BaseController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // Если ошибка или нет данных, используем тестовые
-            return getTestData();
-        }
-
-        // Если данных нет, используем тестовые
-        if (data.isEmpty()) {
-            return getTestData();
         }
 
         return data;
@@ -110,15 +103,6 @@ public class AdminStatisticsController extends BaseController {
         } catch (Exception e) {
             return yearMonth;
         }
-    }
-
-    // Тестовые данные (если база пустая)
-    private Map<String, Double> getTestData() {
-        Map<String, Double> data = new LinkedHashMap<>();
-        data.put("Март 2026", 71000.0);
-        data.put("Апрель 2026", 68000.0);
-        data.put("Май 2026", 59000.0);
-        return data;
     }
 
     // Обновление общей суммы
