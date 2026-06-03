@@ -970,5 +970,76 @@ public class database {
         }
     }
 
+    public static byte[] getMasterPhotoById(int employeeId) {
+        String query = "SELECT photo FROM master_photo WHERE employee_id = ?";
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, employeeId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getBytes("photo");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+//    public static boolean saveMasterPhoto(int employeeId, byte[] photoBytes) {
+//        String query = "INSERT OR REPLACE INTO master_photo (employee_id, photo) VALUES (?, ?)";
+//        try (Connection conn = DriverManager.getConnection(database.url);
+//             PreparedStatement pstmt = conn.prepareStatement(query)) {
+//            pstmt.setInt(1, employeeId);
+//            pstmt.setBytes(2, photoBytes);
+//            return pstmt.executeUpdate() > 0;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
+
+    public static java.util.List<Employer> getEmployersByServiceId(int serviceId) {
+        java.util.List<Employer> list = new java.util.ArrayList<>();
+        String query = "SELECT id, full_name, birth_date, phone, position, service_id, details " +
+                "FROM employees WHERE service_id = ? ORDER BY full_name";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, serviceId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String birthDateStr = rs.getString("birth_date");
+                LocalDate birthDate;
+                try {
+                    birthDate = LocalDate.parse(birthDateStr);
+                } catch (java.time.format.DateTimeParseException e1) {
+                    try {
+                        java.time.format.DateTimeFormatter fmt =
+                                java.time.format.DateTimeFormatter.ofPattern("dd.MM.yyyy");
+                        birthDate = LocalDate.parse(birthDateStr, fmt);
+                    } catch (java.time.format.DateTimeParseException e2) {
+                        System.err.println("Не удалось распарсить дату: " + birthDateStr);
+                        continue;
+                    }
+                }
+
+                Employer emp = new Employer(
+                        rs.getInt("id"),
+                        rs.getString("full_name"),
+                        birthDate,
+                        rs.getString("phone"),
+                        rs.getString("details") != null ? rs.getString("details") : "",
+                        rs.getString("position")
+                );
+                emp.setServiceId(rs.getInt("service_id"));
+                list.add(emp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 
 }

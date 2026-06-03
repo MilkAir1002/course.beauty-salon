@@ -3,15 +3,22 @@ package salon.controller.client;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import salon.Employer;
 import salon.controller.BaseController;
 import salon.db.database;
 import salon.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 public class NewClientAppointmentController extends BaseController {
     private static Integer initialServiceId;
@@ -110,5 +117,31 @@ public class NewClientAppointmentController extends BaseController {
         }
 
         return String.format("%.0f руб.", finalPrice);
+    }
+
+    @FXML
+    private void openMasterInfo() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/master_info_popup.fxml"));
+            Parent root = loader.load();
+            MasterInfoController controller = loader.getController();
+
+            Service selectedService = serviceComboBox.getValue();
+            List<Employer> masters = selectedService != null
+                    ? database.getEmployersByServiceId(selectedService.getServiceId())
+                    : database.getAllEmployees();
+            controller.setMasters(masters);
+
+            Stage popup = new Stage();
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.initOwner(serviceComboBox.getScene().getWindow());
+            popup.setTitle("О мастерах");
+            popup.setScene(new Scene(root));
+            popup.setResizable(false);
+            popup.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showError("Ошибка открытия окна: " + e.getMessage());
+        }
     }
 }

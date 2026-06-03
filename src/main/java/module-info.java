@@ -10,4 +10,5 @@ module ru.bayazitova.maven.coursebeautysalon {
     exports salon;
     opens salon.controller.client to javafx.fxml;
     opens salon.controller.admin to javafx.fxml;
+
 }
