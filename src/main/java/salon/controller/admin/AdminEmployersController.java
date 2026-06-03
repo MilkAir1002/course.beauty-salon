@@ -272,4 +272,9 @@ public class AdminEmployersController extends BaseController {
     private void services(ActionEvent event) throws IOException {
         changeWindow(event, "/fxml/admin/admin_services.fxml", "Панель администратора: услуги");
     }
+
+    @FXML
+    private void statistics(ActionEvent event) throws IOException {
+        changeWindow(event, "/fxml/admin/admin_statistics.fxml", "Панель администратора: статистика");
+    }
 }

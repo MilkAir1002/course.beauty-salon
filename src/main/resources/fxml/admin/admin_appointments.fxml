@@ -80,8 +80,16 @@
                         <Font name="System Bold" size="26.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="15.0" />
                      </VBox.margin>
+                  </Button>
+                  <Button fx:id="logoutButton111111" maxWidth="220.0" mnemonicParsing="false" onAction="#statistics" prefWidth="220.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Статистика" textFill="WHITE">
+                     <padding>
+                        <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="26.0" />
+                     </font>
                   </Button>
                   <VBox VBox.vgrow="ALWAYS" />
                   <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: transparent;" text="Выйти" textFill="WHITE" underline="true">
@@ -118,17 +126,17 @@
             </TableView>
             <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <Button fx:id="logoutButton112" onAction="#addAppointment" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-border-radius: 50; -fx-background-color: #758952; -fx-border-color: white; -fx-border-width: 2; -fx-background-radius: 50;" text="Добавить" textFill="WHITE">
+                  <Button fx:id="logoutButton112" mnemonicParsing="false" onAction="#addAppointment" prefHeight="43.0" prefWidth="210.0" style="-fx-border-radius: 50; -fx-background-color: #758952; -fx-border-color: white; -fx-border-width: 2; -fx-background-radius: 50;" text="Добавить" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logoutButton1121" onAction="#deleteAppointment" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Удалить" textFill="WHITE">
+                  <Button fx:id="logoutButton1121" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #FF7777; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Удалить" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Button>
-                  <Button fx:id="logoutButton1123" onAction="#editAppointment" mnemonicParsing="false" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Редактировать" textFill="WHITE">
+                  <Button fx:id="logoutButton1123" mnemonicParsing="false" onAction="#editAppointment" prefHeight="43.0" prefWidth="210.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2; -fx-background-radius: 50;" text="Редактировать" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
