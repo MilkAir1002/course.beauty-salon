@@ -105,11 +105,11 @@
             <TableView fx:id="tableView" prefHeight="0.0" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="idColumn" minWidth="20.0" prefWidth="20.0" text="ID" />
-                  <TableColumn fx:id="fullNameColumn" prefWidth="212.0" text="ФИО" />
-                  <TableColumn fx:id="phoneColumn" prefWidth="96.0" text="Телефон" />
-                  <TableColumn fx:id="emailColumn" text="Email" />
-                  <TableColumn fx:id="loginColumn" text="Логин" />
-                  <TableColumn fx:id="genderColumn" text="Пол" />
+                  <TableColumn fx:id="fullNameColumn" prefWidth="199.0" text="ФИО" />
+                  <TableColumn fx:id="phoneColumn" prefWidth="129.0" text="Телефон" />
+                  <TableColumn fx:id="emailColumn" prefWidth="88.0" text="Email" />
+                  <TableColumn fx:id="loginColumn" prefWidth="84.0" text="Логин" />
+                  <TableColumn fx:id="genderColumn" prefWidth="48.0" text="Пол" />
                   <TableColumn fx:id="passwordColumn" text="Пароль" />
                </columns>
                <columnResizePolicy>

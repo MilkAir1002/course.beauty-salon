@@ -9,23 +9,26 @@ public class Employer {
     private LocalDate birthDate;
     private String phone;
     private String position;
+    private String details;
     private int serviceId;
 
     // Конструктор для создания нового сотрудника
-    public Employer(String fullName, LocalDate birthDate, String phone, String position) {
+    public Employer(String fullName, LocalDate birthDate, String phone, String details, String position) {
         this.id = -1;
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.phone = phone;
+        this.details = details;
         this.position = position;
         this.serviceId = getServiceIdByPosition(position);
     }
     // Конструктор для редактирования сотрудника (сохраняется старый id)
-    public Employer(int id, String fullName, LocalDate birthDate, String phone, String position) {
+    public Employer(int id, String fullName, LocalDate birthDate, String phone, String details, String position) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.phone = phone;
+        this.details = details;
         this.position = position;
         this.serviceId = getServiceIdByPosition(position);
     }
@@ -53,18 +56,16 @@ public class Employer {
     public String getFullName() {return fullName;}
     public LocalDate getBirthDate() {return birthDate;}
     public String getPhone() {return phone;}
+    public String getDetails() {return details;}
     public String getPosition() {return position;}
     public int getServiceId() {return serviceId;}
 
     // Сеттеры
     public void setId(int id) {this.id = id;}
-
     public void setFullName(String fullName) {this.fullName = fullName;}
-
     public void setBirthDate(LocalDate birthDate) {this.birthDate = birthDate;}
-
     public void setPhone(String phone) {this.phone = phone;}
-
+    public void setDetails(String details) {this.phone = details;}
     public void setPosition(String position) {
         this.position = position;
         this.serviceId = getServiceIdByPosition(position); // Обновляем serviceId при смене должности
