@@ -106,7 +106,7 @@ public class AdminEmployersController extends BaseController {
             return;
         }
 
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION); // Создаем всплывающее окно подтверждения (OK/CANCEL)
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION); // Создаем всплывающее окно подтверждения
         confirmation.setTitle("Подтверждение");
         confirmation.setHeaderText(null);
         confirmation.setContentText("Удалить " + selected.getFullName() + "?");
@@ -162,7 +162,7 @@ public class AdminEmployersController extends BaseController {
 
         // Обработчик кнопки сохранить
         saveButton.setOnAction(e -> { // Действия при нажатии на кнопку
-            // Валидация (проверка ввода)
+            // Валидация
             if (fullNameField.getText().isEmpty()) {
                 showAlert("Введите ФИО");
                 return;
@@ -190,7 +190,7 @@ public class AdminEmployersController extends BaseController {
             // Создаем сотрудника
             if (isEdit) { // Если редактируем
                 result[0] = new Employer(
-                        existingEmployer.getId(), // берем id существующего сотрудника
+                        existingEmployer.getId(),
                         fullNameField.getText(),
                         birthDatePicker.getValue(),
                         formattedPhone,
@@ -211,7 +211,7 @@ public class AdminEmployersController extends BaseController {
         });
 
         dialog.showAndWait(); // Показать окно и ждать пока пользователь не закончит работу
-        return result[0]; // возвращаем сотрудника
+        return result[0]; // Возвращаем сотрудника
     }
 
     private boolean validatePhone(String phone) {

@@ -28,7 +28,7 @@ public class ClientMenuController extends BaseController {
 
     @FXML
     private void openProfile(ActionEvent event) throws IOException {
-        // Теперь открываем профиль из центрального меню
+        // Открываем профиль из центрального меню
         Stage stage = openNewWindow("/fxml/client/edit_client.fxml", "Личные данные");
         stage.setOnHidden(e -> updateWelcomeText());
     }

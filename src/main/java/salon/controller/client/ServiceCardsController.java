@@ -81,14 +81,14 @@ public class ServiceCardsController extends BaseController {
         descriptionColumn.setCellValueFactory(data -> data.getValue().descriptionProperty());
         descriptionColumn.setPrefWidth(330);
 
-        // --- ОБНОВЛЕННАЯ ФАБРИКА ДЛЯ АВТОПЕРЕНОСА ТЕКСТА И ВЫСОТЫ СТРОК ---
+        // Автоперенос текста и высота строк
         descriptionColumn.setCellFactory(tc -> new TableCell<>() {
             private final Text textNode = new Text();
 
             {
                 // Привязываем ширину переноса текста к ширине колонки с небольшим отступом
                 textNode.wrappingWidthProperty().bind(widthProperty().subtract(15));
-                // Наследуем стили шрифта, чтобы текст выглядел аккуратно
+                // Наследуем стили шрифта
                 textNode.styleProperty().bind(styleProperty());
             }
 

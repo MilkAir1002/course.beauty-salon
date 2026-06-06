@@ -15,7 +15,6 @@
 
 <HBox prefHeight="831.0" prefWidth="1030.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.admin.AdminStatisticsController">
     <children>
-        <!-- Левое меню (без изменений) -->
         <StackPane prefHeight="831.0" prefWidth="305.0">
             <children>
                 <ImageView fitHeight="835.0" fitWidth="360.0" preserveRatio="false">
@@ -76,7 +75,6 @@
             </children>
         </StackPane>
 
-        <!-- Правая часть с графиком -->
         <VBox alignment="CENTER" spacing="15" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
@@ -84,7 +82,6 @@
             <children>
                 <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Статистика дохода компании" />
 
-                <!-- Панель с общей суммой -->
                 <HBox alignment="CENTER_RIGHT">
                     <Label style="-fx-font-weight: bold; -fx-font-size: 14px;" text="Общий доход:" />
                     <Label fx:id="totalRevenueLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #27ae60;" text="0 ₽">

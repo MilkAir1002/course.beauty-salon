@@ -31,7 +31,7 @@ public class ClientAppointmentsController extends BaseController {
     @FXML
     private TableColumn<database.ClientAppointment, database.ClientAppointment> statusColumn;
 
-    // Исправленный форматтер: теперь он соответствует вашим данным 2026-05-22
+    // Форматтер
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @FXML
@@ -69,7 +69,7 @@ public class ClientAppointmentsController extends BaseController {
                 try {
                     // Используем LocalDate, так как в логах только дата без времени
                     LocalDate appointmentDate = LocalDate.parse(appointment.getAppointmentDate(), formatter);
-                    // Сравниваем с текущим днем. Если дата записи Раньше сегодняшней — она прошла.
+                    // Сравниваем с текущим днем. Если дата записи Раньше сегодняшней — она прошла
                     isPast = appointmentDate.isBefore(LocalDate.now());
                 } catch (Exception e) {
                     System.err.println("Ошибка парсинга даты: " + appointment.getAppointmentDate());

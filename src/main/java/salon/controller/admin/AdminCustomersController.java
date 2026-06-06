@@ -16,7 +16,6 @@ import salon.controller.BaseController;
 import salon.db.database;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class AdminCustomersController extends BaseController {
     @FXML private TableView<Customer> tableView;
@@ -223,7 +222,7 @@ public class AdminCustomersController extends BaseController {
                         formattedPhone,
                         emailField.getText().trim(),
                         loginField.getText().trim(),
-                        genderForDb,  // Отправляем "M" или "F" в базу данных
+                        genderForDb,  // Отправляем M или F в базу данных
                         passwordField.getText().trim()
                 );
             } else {
@@ -234,7 +233,7 @@ public class AdminCustomersController extends BaseController {
                         formattedPhone,
                         emailField.getText().trim(),
                         loginField.getText().trim(),
-                        genderForDb,  // Отправляем "M" или "F" в базу данных
+                        genderForDb,
                         passwordField.getText().trim()
                 );
             }

@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Image icon = new Image(getClass().getResourceAsStream("/fxml/logo1.png"));
 
-        // 2. Устанавливаем иконку для окна приложения
+        // Устанавливаем иконку для окна приложения
         primaryStage.getIcons().add(icon);
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/role_selector.fxml"));

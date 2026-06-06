@@ -67,35 +67,35 @@
                         <!-- Центральное меню: 5 кнопок -->
                         <VBox maxWidth="620.0" spacing="12.0">
                             <children>
-                                <!-- 1. Профиль -->
+                                <!-- Профиль -->
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openProfile" prefHeight="60.0" style="-fx-background-color: #E5A9A9; -fx-background-radius: 10;" text="ПРОФИЛЬ" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Button>
 
-                                <!-- 2. Мои записи -->
+                                <!-- Мои записи -->
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openAppointments" prefHeight="60.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="МОИ ЗАПИСИ" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Button>
 
-                                <!-- 3. Новая запись -->
+                                <!-- Новая запись -->
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openNewAppointment" prefHeight="60.0" style="-fx-background-color: #E5A9A9; -fx-background-radius: 10;" text="НОВАЯ ЗАПИСЬ" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Button>
 
-                                <!-- 4. Карточки услуг -->
+                                <!-- Карточки услуг -->
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openServiceCards" prefHeight="60.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 10;" text="КАРТОЧКИ УСЛУГ" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
                                     </font>
                                 </Button>
 
-                                <!-- 5. Прайс-лист -->
+                                <!-- Прайс-лист -->
                                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openPriceList" prefHeight="60.0" style="-fx-background-color: #E5A9A9; -fx-background-radius: 10;" text="ПРАЙС-ЛИСТ" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="18.0" />
