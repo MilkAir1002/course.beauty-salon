@@ -37,9 +37,4 @@ public class Admin {
     public void setPhone(String phone) { this.phone = phone; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
     public void setLastLogin(String lastLogin) { this.lastLogin = lastLogin; }
-
-    @Override
-    public String toString() {
-        return fullName + " (" + login + ")";
-    }
 }

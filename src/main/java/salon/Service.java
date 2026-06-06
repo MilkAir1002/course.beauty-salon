@@ -74,17 +74,4 @@ public class Service {
     public void setPrice(double price) { this.price = price; }
     public void setServiceId(int serviceId) { this.serviceId = serviceId; }
     public void setDescription(String description) { this.description = description; }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Service service = (Service) obj;
-        return id == service.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(id);
-    }
 }

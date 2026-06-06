@@ -76,23 +76,4 @@ public class Employer {
     public String getFormattedBirthDate() {
         return birthDate != null ? birthDate.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) : "";
     }
-
-    // Переопределяем equals и hashCode для корректного поиска в списке
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Employer employer = (Employer) obj;
-        return id == employer.id && id != -1; // Сравниваем по ID, если он не временный
-    }
-
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return fullName + " (" + position + ")";
-    }
 }

@@ -55,9 +55,4 @@ public class Appointment {
     public void setSpecialist(String specialist) { this.specialist = specialist; }
     public void setPrice(double price) { this.price = price; }
     public void setStatus(String status) { this.status = status; }
-
-    @Override
-    public String toString() {
-        return serviceName + " - " + appointmentDate + " - " + specialist;
-    }
 }
