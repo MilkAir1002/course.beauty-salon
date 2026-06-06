@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="631.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.RegisterController">
+<HBox prefHeight="631.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.RegisterController" stylesheets="@../../css/styles.css">
 
     <children>
         <!-- ЛЕВАЯ ПАНЕЛЬ -->
@@ -54,18 +54,18 @@
             </children>
         </StackPane>
 
-        <!-- ПРАВАЯ ПАНЕЛЬ -->
+        <!-- Правая панель -->
         <StackPane HBox.hgrow="ALWAYS">
             <children>
-                <!-- Слой 1: Фон  -->
+                <!-- Фон  -->
                 <ImageView fitHeight="839.0" fitWidth="672.0" pickOnBounds="true" preserveRatio="false">
                     <image>
                         <Image url="@../FON1.png" />
                     </image>
                 </ImageView>
 
-                <!-- Слой 2: Форма регистрации -->
-                <VBox alignment="CENTER" spacing="18.0" style="-fx-background-color: rgba(255, 255, 255, 0.78);"> <!-- Белый полупрозрачный фон для читаемости полей -->
+                <!-- Форма регистрации -->
+                <VBox alignment="CENTER" spacing="18.0" style="-fx-background-color: rgba(255, 255, 255, 0.78);">
                     <children>
                         <VBox alignment="CENTER" spacing="5.0">
                             <children>

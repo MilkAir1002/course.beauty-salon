@@ -147,7 +147,7 @@ public class AdminAppointmentsController extends BaseController {
             return;
         }
 
-        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION); // Создаем всплывающее окно подтверждения (OK/CANCEL)
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION); // Создаем всплывающее окно подтверждения
         confirmation.setTitle("Подтверждение");
         confirmation.setHeaderText(null);
         confirmation.setContentText("Удалить запись #" + selected.getId() + " (клиент: " + selected.getClientLogin() + ")?");
@@ -194,7 +194,7 @@ public class AdminAppointmentsController extends BaseController {
         ObservableList<Service> services = database.getServicesCatalog();
         serviceCombo.setItems(services);
 
-        // Настраиваем отображение услуг в ComboBox (показываем только название)
+        // Настраиваем отображение услуг в ComboBox
         serviceCombo.setConverter(new StringConverter<Service>() {
             @Override
             public String toString(Service service) {

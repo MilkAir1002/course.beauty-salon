@@ -11,7 +11,7 @@ public class Service {
 
     // Конструктор для создания новой услуги
     public Service(String name, String category, String duration, double price, String description) {
-        this.id = -1; // -1 означает, что ID ещё не присвоен базой
+        this.id = -1;
         this.name = name;
         this.category = category;
         this.duration = duration;
@@ -66,7 +66,6 @@ public class Service {
     // Сеттеры
     public void setId(int id) { this.id = id; }
     public void setName(String name) { this.name = name; }
-
     public void setCategory(String category) {
         this.category = category;
         this.serviceId = getServiceIdByCategory(category);

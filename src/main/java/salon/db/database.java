@@ -7,6 +7,9 @@ import salon.*;
 import java.time.LocalDate;
 
 import java.sql.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 
 public class database {
     public static final String url = "jdbc:sqlite:salon.db"; // путь к файлу базы данных
@@ -601,7 +604,7 @@ public class database {
 
             pstmt.setString(1, employer.getFullName());
             // Сохраняем дату в формате YYYY-MM-DD
-            pstmt.setString(2, employer.getBirthDate().toString()); // Это даст формат YYYY-MM-DD
+            pstmt.setString(2, employer.getBirthDate().toString());
             pstmt.setString(3, employer.getPhone());
             pstmt.setString(4, employer.getDetails());
             pstmt.setString(5, employer.getPosition());
@@ -678,7 +681,7 @@ public class database {
                         rs.getString("phone"),
                         rs.getString("email"),
                         rs.getString("login"),
-                        rs.getString("gender"), // Здесь будет "M" или "F" из базы
+                        rs.getString("gender"),
                         rs.getString("password")
                 );
                 customers.add(customer);
@@ -851,6 +854,7 @@ public class database {
         }
         return false;
     }
+
     // Получить все записи
     public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -985,19 +989,6 @@ public class database {
         return null;
     }
 
-//    public static boolean saveMasterPhoto(int employeeId, byte[] photoBytes) {
-//        String query = "INSERT OR REPLACE INTO master_photo (employee_id, photo) VALUES (?, ?)";
-//        try (Connection conn = DriverManager.getConnection(database.url);
-//             PreparedStatement pstmt = conn.prepareStatement(query)) {
-//            pstmt.setInt(1, employeeId);
-//            pstmt.setBytes(2, photoBytes);
-//            return pstmt.executeUpdate() > 0;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-
     public static java.util.List<Employer> getEmployersByServiceId(int serviceId) {
         java.util.List<Employer> list = new java.util.ArrayList<>();
         String query = "SELECT id, full_name, birth_date, phone, position, service_id, details " +
@@ -1041,5 +1032,34 @@ public class database {
         return list;
     }
 
+    // Получение данных о доходах за последние 3 месяца
+    public static Map<String, Double> getLastThreeMonthsRevenue() {
+        Map<String, Double> data = new LinkedHashMap<>();
 
+        String query = "SELECT strftime('%Y-%m', appointment_date) as month, " +
+                "COALESCE(SUM(price), 0) as total " +
+                "FROM appointments " +
+                "WHERE status != 'отменено' " +
+                "AND date(appointment_date) >= date('now', '-3 months') " +
+                "GROUP BY strftime('%Y-%m', appointment_date) " +
+                "ORDER BY month ASC";
+
+        try (Connection conn = DriverManager.getConnection(database.url);
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                String yearMonth = rs.getString("month");
+                double revenue = rs.getDouble("total");
+                data.put(yearMonth, revenue);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
 }
+
+

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="848.0" prefWidth="499.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.MasterInfoController">
+<VBox alignment="TOP_CENTER" prefHeight="848.0" prefWidth="499.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.MasterInfoController" stylesheets="@../../css/styles.css">
     <padding>
         <Insets bottom="20.0" left="24.0" right="24.0" top="24.0" />
     </padding>

@@ -1,8 +1,5 @@
 package salon;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Appointment {
     private int id;
     private String clientLogin;

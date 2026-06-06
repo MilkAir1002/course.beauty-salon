@@ -1,18 +1,15 @@
 package salon;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 public class Customer {
     private int id;
-    private String lastName;      // фамилия
-    private String firstName;     // имя
-    private String patronymic;    // отчество
-    private String phone;         // телефон
-    private String email;         // email
-    private String login;         // логин
-    private String gender;        // пол
-    private String password;      // пароль
+    private String lastName;
+    private String firstName;
+    private String patronymic;
+    private String phone;
+    private String email;
+    private String login;
+    private String gender;
+    private String password;
 
     // Конструктор для создания нового клиента
     public Customer(String lastName, String firstName, String patronymic,
