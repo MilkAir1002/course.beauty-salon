@@ -54,7 +54,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="982c8c45-4acd-4ed6-8e8e-81598ee2a352">
-      <console name="Connection" type="STANDARD" schema="salon" session="Main"><![CDATA[select * from services;
+      <console name="Connection" type="STANDARD" schema="salon" session="Main"><![CDATA[select * from service_cards;
+select * from master_photo;
 select * from appointments;
 select * from admins;
 select * from clients;
