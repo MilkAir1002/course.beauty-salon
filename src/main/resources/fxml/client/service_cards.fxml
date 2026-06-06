@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="831.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.ServiceCardsController" stylesheets="@../../css/styles.css">
+<StackPane prefHeight="831.0" prefWidth="1030.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.ServiceCardsController">
     <children>
         <ImageView fitHeight="831.0" fitWidth="1030.0" pickOnBounds="true" preserveRatio="false">
             <image>
@@ -23,7 +23,7 @@
 
         <VBox style="-fx-background-color: rgba(255, 255, 255, 0.78);">
             <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="1030.0" style="-fx-background-color: #E8C0C5;">
+                <HBox alignment="CENTER_LEFT" prefHeight="85.0" prefWidth="1030.0" style="-fx-background-color: #E8C0C5;">
                     <children>
                         <Button mnemonicParsing="false" onAction="#goBack" prefHeight="45.0" prefWidth="134.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="НАЗАД" textFill="WHITE">
                             <font>
@@ -41,14 +41,14 @@
 
                 <VBox alignment="CENTER" spacing="24.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <VBox alignment="CENTER" prefHeight="221.0" prefWidth="914.0" spacing="5.0">
+                        <VBox alignment="CENTER" prefHeight="177.0" prefWidth="874.0">
                             <children>
                                 <ImageView fitHeight="130.0" fitWidth="130.0" preserveRatio="false">
                                     <image>
                                         <Image url="@../logo1.png" />
                                     </image>
                            <VBox.margin>
-                              <Insets top="45.0" />
+                              <Insets top="47.0" />
                            </VBox.margin>
                                 </ImageView>
                         <Label text="ЭСТЕТИКА" textFill="#758952">

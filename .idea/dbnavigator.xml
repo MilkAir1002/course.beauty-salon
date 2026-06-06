@@ -67,7 +67,7 @@
     <prerequisites />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" />
+    <connection id="a8c4a086-188e-41df-b484-0668e4babbb3" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="a8c4a086-188e-41df-b484-0668e4babbb3" dataset="main.clients" active-filter-id="EMPTY_FILTER" />
