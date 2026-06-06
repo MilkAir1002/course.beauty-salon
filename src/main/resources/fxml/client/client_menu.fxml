@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="700.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.ClientMenuController">
+<StackPane prefHeight="700.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.client.ClientMenuController" stylesheets="@../../css/styles.css">
     <children>
         <ImageView fitHeight="831.0" fitWidth="1030.0" pickOnBounds="true" preserveRatio="false" style="-fx-background-color: rgba(255, 255, 255, 0.78);">
             <image>

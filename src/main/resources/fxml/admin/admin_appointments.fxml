@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="831.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.admin.AdminAppointmentsController">
+<HBox prefHeight="831.0" prefWidth="1030.0" stylesheets="@../../css/styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="salon.controller.admin.AdminAppointmentsController">
    <children>
       <StackPane prefHeight="831.0" prefWidth="305.0">
          <children>
@@ -50,7 +50,7 @@
                         <Insets bottom="15.0" top="30.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="logoutButton111" maxWidth="220.0" mnemonicParsing="false" onAction="#clients" prefHeight="32.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Клиенты" textFill="WHITE">
+                  <Button fx:id="logoutButton111" maxWidth="220.0" mnemonicParsing="false" onAction="#clients" prefHeight="32.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 50; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Клиенты" textFill="WHITE">
                      <padding>
                         <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
                      </padding>
@@ -72,7 +72,7 @@
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="logoutButton11111" maxWidth="220.0" mnemonicParsing="false" onAction="#services" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Услуги" textFill="WHITE">
+                  <Button fx:id="logoutButton11111" maxWidth="220.0" mnemonicParsing="false" onAction="#services" style="-fx-background-color: #E8C0C5; -fx-background-radius: 50; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Услуги" textFill="WHITE">
                      <padding>
                         <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
                      </padding>
@@ -83,7 +83,7 @@
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="logoutButton111111" maxWidth="220.0" mnemonicParsing="false" onAction="#statistics" prefWidth="220.0" style="-fx-background-color: #E8C0C5; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Статистика" textFill="WHITE">
+                  <Button fx:id="logoutButton111111" maxWidth="220.0" mnemonicParsing="false" onAction="#statistics" prefWidth="220.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 50; -fx-border-color: white; -fx-border-radius: 50; -fx-border-width: 2;" text="Статистика" textFill="WHITE">
                      <padding>
                         <Insets bottom="6.0" left="18.0" right="18.0" top="6.0" />
                      </padding>

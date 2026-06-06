@@ -1,9 +1,11 @@
 package salon.controller.admin;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.*;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import salon.controller.BaseController;
 import salon.db.database;
 
@@ -17,9 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AdminStatisticsController extends BaseController {
-    @FXML private LineChart<String, Number> revenueChart;
-    @FXML private CategoryAxis xAxis;
-    @FXML private NumberAxis yAxis;
+    @FXML private BarChart<String, Number> revenueChart;
     @FXML private Label totalRevenueLabel;
 
     private XYChart.Series<String, Number> revenueSeries;
@@ -34,10 +34,9 @@ public class AdminStatisticsController extends BaseController {
         // Создаём серию для данных
         revenueSeries = new XYChart.Series<>();
         revenueSeries.setName("Доход компании");
-        revenueChart.getData().add(revenueSeries);
 
-        // Загружаем данные
-        loadRevenueData();
+        revenueChart.getData().clear();
+        revenueChart.getData().add(revenueSeries);
     }
 
     private void loadRevenueData() {
@@ -50,8 +49,24 @@ public class AdminStatisticsController extends BaseController {
         for (Map.Entry<String, Double> entry : monthlyData.entrySet()) {
             XYChart.Data<String, Number> data = new XYChart.Data<>(entry.getKey(), entry.getValue());
             revenueSeries.getData().add(data);
+            // Добавляем всплывающую подсказку
+            Platform.runLater(() -> {
+                if (data.getNode() != null) {
+                    Tooltip tooltip = new Tooltip(String.format("Доход: %.2f ₽", entry.getValue()));
+                    // Настройка внешнего вида подсказки
+                    tooltip.setStyle(
+                            "-fx-font-size: 14px;" +
+                                    "-fx-font-weight: bold;" +
+                                    "-fx-background-color: #ffffff;" +
+                                    "-fx-text-fill: #333333;" +
+                                    "-fx-padding: 8px;" +
+                                    "-fx-border-radius: 5px;" +
+                                    "-fx-background-radius: 5px;"
+                    );
+                    Tooltip.install(data.getNode(), tooltip);
+                }
+            });
         }
-
         // Обновляем общую сумму
         updateTotalRevenue(monthlyData);
     }
@@ -78,6 +93,7 @@ public class AdminStatisticsController extends BaseController {
                 String monthName = formatMonthName(yearMonth);
                 data.put(monthName, revenue);
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
