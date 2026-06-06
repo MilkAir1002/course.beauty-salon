@@ -53,12 +53,8 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="982c8c45-4acd-4ed6-8e8e-81598ee2a352">
-      <console name="Connection" type="STANDARD" schema="salon" session="Main"><![CDATA[select * from services;
-select * from appointments;
-select * from admins;
-select * from clients;
-select * from employees;]]></console>
+    <connection id="a8c4a086-188e-41df-b484-0668e4babbb3">
+      <console name="Connection" type="STANDARD" schema="main" session="Main"><![CDATA[select * from employees;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -99,7 +95,7 @@ select * from employees;]]></console>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection source-id="" id="982c8c45-4acd-4ed6-8e8e-81598ee2a352" active="true" signed="true">
+      <connection source-id="" id="a8c4a086-188e-41df-b484-0668e4babbb3" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
@@ -119,7 +115,7 @@ select * from employees;]]></console>
           <protocol value="" />
           <url-parameters />
           <files>
-            <file path="C:\Users\meleh\IdeaProjects\course.beauty-salon\salon.db" schema="salon" />
+            <file path="C:\Users\Kamila.DESKTOP-B95LKMN\Desktop\Study\JavaFXproject\course.beauty-salon\salon.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
@@ -584,7 +580,7 @@ select * from employees;]]></console>
       <transactions>
         <uncommitted-changes>
           <on-project-close value="ASK" />
-          <on-disconnect value="ASK" />
+          <on-disconnect value="COMMIT" />
           <on-autocommit-toggle value="ASK" />
         </uncommitted-changes>
         <multiple-uncommitted-changes>
