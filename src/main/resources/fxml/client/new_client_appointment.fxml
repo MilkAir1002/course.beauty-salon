@@ -76,7 +76,10 @@
                                       <TextField fx:id="priceField" editable="false" promptText="Цена" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10; -fx-font-size: 18;" />
                                       <DatePicker fx:id="datePicker" maxWidth="1.7976931348623157E308" promptText="Дата" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10; -fx-font-size: 18;" />
                                       <ComboBox fx:id="specialistComboBox" maxWidth="1.7976931348623157E308" promptText="Специалист" style="-fx-background-radius: 10; -fx-border-color: #F4E2E4; -fx-border-radius: 10; -fx-font-size: 18;" />
-                              <Button mnemonicParsing="false" onAction="#openMasterInfo" prefHeight="39.0" prefWidth="424.0" text="Подробнее о специалистах" />
+                              <Button mnemonicParsing="false" onAction="#openMasterInfo" prefHeight="45.0" prefWidth="424.0" style="-fx-background-color: #E8C0C5; -fx-background-radius: 15;" text="Подробнее о специалистах" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Button>
                                       <Button fx:id="saveAppointmentButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#saveAppointment" prefWidth="419.0" style="-fx-background-color: #E5A9A9; -fx-background-radius: 15;" text="ЗАПИСАТЬСЯ" textFill="WHITE">
                                           <font>
                                               <Font name="System Bold" size="17.0" />
